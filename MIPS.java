@@ -5,14 +5,15 @@ import java.math.*;
 public class MIPS {
 //Hardware specifications
 //Specifiy register sizes	
-	
+
+//BUFFERS
 static int[] IF_ID = new int [36];//32 bits for Inst | 4 bits for PC
 static int[] ID_EX = new int [110];//5 for inst[15-11] | 5 for inst[20-16] 
 //| 32 for sign extended inst[15-0] | 32 bits for read data 1 
 //| 32 bits for read data 2 | 4 bits for PC
 static int[] EX_MEM = new int [6];
 static int[] MEM_WB = new int [6];
-static int[][] registers = new int[32][4];//Do we assume the registers are 32 bits?
+static int[][] registers = new int[32][4];//Do we assume the registers are 32 bits? I am setting these to 4 bits for now
 static int[][] inst_memory = new int[32][32];
 static int[] ir = new int [32];
 static int[] PC = new int[4];
@@ -56,7 +57,7 @@ public static void decode(){
 	sign_ext=concat(sign_ext,offset);
 	//----------------------------
 	int[] Datapath = Arrays.copyOfRange(IF_ID, 16, 21);//from rd field in buffer
-	ID_EX=concat(Datapath,concat(ReadRegister2,concat(sign_ext,concat(Readdata2,concat(Readdata1,PC)))));
+	ID_EX=concat(Datapath,concat(ReadRegister2,concat(sign_ext,concat(Readdata2,concat(Readdata1,PC)))));//Yeah this is ugly
 	
 	int[] shamtarr = Arrays.copyOfRange(IF_ID, 21, 26);
 	System.out.println(Arrays.toString(shamtarr));

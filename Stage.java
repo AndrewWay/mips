@@ -1,37 +1,39 @@
 
-public class Stage {
-	private int regsize;
-	private int reg_num;
+public abstract class Stage {
 	private int inbuff_size;
 	private int outbuff_size;
 	private Memory mem;
-	private Bin[] registers;
 	private Bin in_buff;
 	private Bin out_buff; 
 	
-	public Stage(int rs, int rn,int ibs, int obs){
-		inbuff_size=ibs;
-		outbuff_size=obs;
-		regsize=rs;
-		reg_num=rn;
-		registers=new Bin[rn];
-		for(int i=0;i<reg_num;i++){
-			registers[i]=new Bin(regsize);
-			registers[i].disp();
-		}
-		in_buff=new Bin(inbuff_size);
-		out_buff=new Bin(outbuff_size);
-	}
-	public void disp_registers(){
-		for(int i=0;i<reg_num;i++){
-			System.out.println("r"+i+" "+registers[i].disp());
-		}
-	}
-	public void disp_register(int i){
-		System.out.println("r"+i+" "+registers[i].disp());
+	public Stage(int ibs, int obs,Memory m){
+		setmem(m);
+		setInputBufferSize(ibs);
+		setOutputBufferSize(obs);
 	}
 	public void disp_buffers(){
 		System.out.println("INPUT BUFFER"+in_buff.disp());
 		System.out.println("OUTPUT BUFFER"+out_buff.disp());	
+	}
+	public void setmem(Memory m){
+		mem=m;
+	}
+	public void setInputBufferSize(int ibs){
+		inbuff_size=ibs;
+	}
+	public void setOutputBufferSize(int obs){
+		outbuff_size=obs;
+	}
+	public int getOutputBufferSize(){
+		return outbuff_size;
+	}
+	public int getInputBufferSize(){
+		return inbuff_size;
+	}
+	public void setInputBuffer(){
+		in_buff=new Bin(getInputBufferSize());
+	}
+	public void setOutputBuffer(){
+		out_buff=new Bin(getOutputBufferSize());
 	}
 }

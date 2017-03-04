@@ -4,7 +4,8 @@ import java.math.*;
 
 public class MIPS {
 //Hardware specifications
-//Specifiy register sizes	
+//Specify register sizes
+//TODO Allow hardware spec parameters to be set
 	
 static int[] IF_ID = new int [36];//32 bits for Inst | 4 bits for PC
 static int[] ID_EX = new int [110];//5 for inst[15-11] | 5 for inst[20-16] 

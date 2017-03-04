@@ -4,6 +4,7 @@ public class Stage {
 	private int reg_num;
 	private int inbuff_size;
 	private int outbuff_size;
+	private Memory mem;
 	private Bin[] registers;
 	private Bin in_buff;
 	private Bin out_buff; 

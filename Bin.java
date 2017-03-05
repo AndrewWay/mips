@@ -18,16 +18,25 @@ public class Bin {
 		output+="| val= "+Integer.toString(evaluate());
 		return output;
 	}
-	public void overwrite(int[] r){
-		if(Array.getLength(r)==bin_size){
-			bin=r;
+	public void overwrite(int[] newVal){
+		//Overwrite an entire bin with a new integer array
+		int newBinSize = Array.getLength(newVal);
+		if(Array.getLength(newVal)==bin_size){
+			bin=newVal;
+		}
+		else if(newBinSize<bin_size){
+			clearBin();
+			for(int i=0;i<newBinSize;i++){
+				bin[i]=newVal[i];
+			}
 		}
 		else{
-			//TODO Throw IncompatibleBinException
-			System.out.println("ERROR: INPUT NOT COMPATIBLE");
+			//TODO Throw BinOverFlowException
+			System.out.println("ERROR: Input Value too large for Bin");
 		}
 	}
 	public void input(int i,int val){
+		//Update a section of a Bin with 0 or 1
 		if(val == 0 || val == 1){
 			bin[i]=val;
 		}
@@ -38,6 +47,7 @@ public class Bin {
 		}
 	}
 	public int[] get(){
+		//Return the integer array containing Bin binary values
 		return bin;
 	}
 	public void randomize(){
@@ -56,15 +66,25 @@ public class Bin {
 	public int evaluate(){
 		return bin_toDec(bin);
 	}
-	public static int bin_toDec(int[] bin){
-		int size = Array.getLength(bin);
-		int decimal = 0;
-		for(int i=0;i<=size-1;i++){
-			//System.out.println(bin[i]);
-			int term = (int) Math.pow(2, size-1-i);
-			decimal=decimal+bin[i]*term;//Does not account for negative numbers
+	public void clearBin(){
+		bin=new int[bin_size];
+	}
+	public void dec_overwrite(int r){
+		int[] newVal = dec_toBin(r);
+		int newBinSize = Array.getLength(newVal);
+		if(newBinSize==bin_size){
+			bin=newVal;
 		}
-		return decimal;
+		else if(newBinSize<bin_size){
+			clearBin();
+			for(int i=0;i<newBinSize;i++){
+				bin[i]=newVal[i];
+			}
+		}
+		else{
+			//TODO Throw BinOverFlowException
+			System.out.println("ERROR: Input Value too large for Bin");
+		}
 	}
 	public static int[] dec_toBin(int dec){
 		//determine array size needed
@@ -87,5 +107,14 @@ public class Bin {
 		}
 		return bin;
 	}
-	//TODO Create method for overwriting register with decimal input
+	public static int bin_toDec(int[] bin){
+		int size = Array.getLength(bin);
+		int decimal = 0;
+		for(int i=0;i<=size-1;i++){
+			//System.out.println(bin[i]);
+			int term = (int) Math.pow(2, size-1-i);
+			decimal=decimal+bin[i]*term;//Does not account for negative numbers
+		}
+		return decimal;
+	}
 }

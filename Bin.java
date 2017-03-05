@@ -1,3 +1,4 @@
+import java.io.Console;
 import java.lang.reflect.Array;
 import java.util.Random;
 
@@ -24,12 +25,25 @@ public class Bin {
 		return bin_toDec(bin);
 	}
 	public Bin extract(int start,int end){
-		Bin subBin = new Bin(start-end+1);
+		System.out.println(Integer.toString(end-start+1));
+		Bin subBin = new Bin(end-start+1);
 		int[] binVal = getArray();
 		for(int i=0;i<subBin.getBinSize();i++){
 			subBin.input(i,binVal[start+i]);
 		}
 		return subBin;	
+	}
+	public void overwrite_section(int start,Bin newBin){
+		int[] newBinArray = newBin.getArray();
+		if(start+newBin.getBinSize()>this.getBinSize()){
+			System.out.println("ERROR: newBin cannot overwrite the specified section of the bin");
+			System.out.println("Aborting section overwrite");
+		}
+		else{
+			for(int i=start;i<this.getBinSize();i++){
+				this.input(i, newBinArray[i-start]);
+			}
+		}
 	}
 	public void clearBin(){
 		bin=new int[bin_size];
@@ -67,7 +81,7 @@ public class Bin {
 		}
 	}
 	public void overwrite(int[] newVal){
-		//Overwrite an entire bin with a new integer array
+		//Overwrite the entire bin with a new integer array
 		int newBinSize = Array.getLength(newVal);
 		if(Array.getLength(newVal)==bin_size){
 			bin=newVal;

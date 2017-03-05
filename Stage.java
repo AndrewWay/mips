@@ -55,8 +55,10 @@ public abstract class Stage {
 	}
 	public void loadBuffer(int start,int end,Bin b){
 		int[] valArr = b.getArray();
+		System.out.println(getOutputBufferSize());
 		for(int i=start;i<=end;i++){
-			out_buff.input(i, valArr[i]);
+			System.out.println(i);
+			out_buff.input(i, valArr[i-start]);
 		}
 	}
 	public void syncBuffers(Bin b){

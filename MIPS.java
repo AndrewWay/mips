@@ -39,6 +39,8 @@ public class MIPS {
 		IF.disp_buffers();
 		System.out.println("ID BUFFERS");
 		ID.disp_buffers();
+		
+		ID.decode();
 	}
 	public static void loadBuffer(Stage s,Bin buffData){//Why is this static
 		s.setInputBuffer(buffData);

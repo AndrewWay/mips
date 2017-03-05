@@ -6,6 +6,7 @@ public class Memory {
 	private int regnum;
 	private int inst_mem_size;
 	private int inst_mem_num;
+	private Bin control_vector;
 	private Bin[] registers;
 	private Bin PC;//TODO Initialize this. Also make this into a binary array. Will need a bintodec converter in here. 
 	//Might need to make a new class that handles binary arithmetic and binary-decimal conversion.
@@ -19,6 +20,7 @@ public class Memory {
 		createPC();
 		setPC(0);
 		createRegisters();
+		createControlVector();
 		createInstMem();
 		loadInstructions();
 	}
@@ -30,6 +32,12 @@ public class Memory {
 	}
 	public Bin getPC(){
 		return PC;
+	}
+	public void createControlVector(){
+		control_vector=new Bin(9);
+	}
+	public void setControlVector(int[] cv){
+		control_vector.overwrite(cv);
 	}
 	public void setInstSize(int ims) {
 		inst_mem_size=ims;

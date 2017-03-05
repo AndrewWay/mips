@@ -1,6 +1,5 @@
 import java.util.Arrays;
 
-
 public class Fetch extends Stage{
 
 	private Bin ir;

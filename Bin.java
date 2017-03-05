@@ -9,6 +9,10 @@ public class Bin {
 		this.bin_size = bin_size;
 		bin=new int[bin_size];
 	}
+	public Bin(int[] binArr){
+		this.bin_size = Array.getLength(binArr);
+		bin=binArr;
+	}
 	public int getBinSize(){
 		return bin_size;
 	}
@@ -18,6 +22,14 @@ public class Bin {
 	}
 	public int evaluate(){
 		return bin_toDec(bin);
+	}
+	public Bin extract(int start,int end){
+		Bin subBin = new Bin(start-end+1);
+		int[] binVal = getArray();
+		for(int i=0;i<subBin.getBinSize();i++){
+			subBin.input(i,binVal[start+i]);
+		}
+		return subBin;	
 	}
 	public void clearBin(){
 		bin=new int[bin_size];

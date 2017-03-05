@@ -86,4 +86,7 @@ public class Memory {
 	public int[][] getInstMem(){
 		return inst_memory;
 	}
+	public Bin getRegister(int i){
+		return registers[i];
+	}
 }

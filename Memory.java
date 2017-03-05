@@ -1,3 +1,5 @@
+import java.lang.reflect.Array;
+
 
 public class Memory {
 	private int regsize;
@@ -5,22 +7,28 @@ public class Memory {
 	private int inst_mem_size;
 	private int inst_mem_num;
 	private Bin[] registers;
-	private Bin[] PC;//TODO Initialize this
+	private int PC;//TODO Initialize this. Also make this into a binary array. Will need a bintodec converter in here. 
+	//Might need to make a new class that handles binary arithmetic and binary-decimal conversion.
 	static int[][] inst_memory;
 	
 	public Memory(int rs, int rn,int ims, int imn){
+		setPC(0);
 		setRegSize(rs);
 		setRegNum(rn);
 		setInstSize(ims);
 		setInstNum(imn);
 		createRegisters();
+		createInstMem();
 		loadInstructions();
 	}
-	private void setInstSize(int ims) {
-		inst_mem_size=ims;
-		
+	public void setPC(int pc){
+		PC=pc;
 	}
-	private void setInstNum(int imn) {
+	public void setInstSize(int ims) {
+		inst_mem_size=ims;
+		inst_mem_size=32;//HARDCODED INSTRUCTION SIZE. Comment this line to use custom instruction size.
+	}
+	public void setInstNum(int imn) {
 		inst_mem_num=imn;
 	}
 	public void disp_registers(){
@@ -56,13 +64,20 @@ public class Memory {
 	public void randomize_register(int i){
 		registers[i].randomize();
 	}
-	public void loadInstructions(){
+	public void createInstMem(){
 		inst_memory=new int[getInstNum()][getInstSize()];
 	}
-	private int getInstSize() {
+	public void loadInstructions(){
+		inst_memory[0]=new int[]{0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1};//TODO Read instructions from memory
+	}
+	public int getInstSize() {
 		return inst_mem_size;
 	}
-	private int getInstNum() {
+	public int getInstNum() {
 		return inst_mem_num;
 	}
+	public int[][] getInstMem(){
+		return inst_memory;
+	}
+	//TODO create a method for overwriting a register with decimal number as input
 }

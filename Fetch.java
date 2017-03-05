@@ -1,15 +1,28 @@
 
 public class Fetch extends Stage{
 
-	public Fetch(int ibs, int obs,Memory m) {
+	private int[] ir;
+ 	public Fetch(int ibs, int obs,Memory m) {
 		super(ibs, obs, m);
 	}
-	public static void fetch(){
+	public void fetch(Bin PC){
 		//Increment PC
-	//	incrementPC();
+		//incrementPC();//TODO Uncomment this and get it working
 		//Obtain the instruction located at PC
-//		ir = inst_memory[bin_toDec(PC)];
+		Memory m = getMem();
+		int[] instruction = m.getInstMem()[PC.bin_toDec()];
+		setIR(instruction);//TODO Change to inst_memory[bin_toDec(PC)] after making PC a binary array
 		//Load that instruction into buffer
-//		IF_ID=concat(ir,PC);
+		loadBuffer();
+	}
+	public int[] getIR(){
+		return ir;
+	}
+	public void setIR(int[] a){
+		ir=a;
+	}
+	public void loadBuffer(){
+		int[] output = Arrays.concat(ir,PC);
+		out_buff.overwrite()
 	}
 }

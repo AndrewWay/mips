@@ -87,4 +87,5 @@ public class Bin {
 		}
 		return bin;
 	}
+	//TODO Create method for overwriting register with decimal input
 }

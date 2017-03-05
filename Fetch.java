@@ -1,28 +1,29 @@
+import java.util.Arrays;
+
 
 public class Fetch extends Stage{
 
-	private int[] ir;
+	private Bin ir;
  	public Fetch(int ibs, int obs,Memory m) {
 		super(ibs, obs, m);
+		ir=new Bin(getMem().getInstSize());
 	}
 	public void fetch(Bin PC){
 		//Increment PC
 		//incrementPC();//TODO Uncomment this and get it working
 		//Obtain the instruction located at PC
 		Memory m = getMem();
-		int[] instruction = m.getInstMem()[PC.bin_toDec()];
-		setIR(instruction);//TODO Change to inst_memory[bin_toDec(PC)] after making PC a binary array
+		int[] instruction = m.getInstMem()[PC.evaluate()];
+		setIR(instruction);
 		//Load that instruction into buffer
-		loadBuffer();
+		
+		loadBuffer(0,ir.getBinSize()-1,ir);
+		loadBuffer(ir.getBinSize(),PC.getBinSize()-1,PC);
 	}
-	public int[] getIR(){
+	public Bin getIR(){
 		return ir;
 	}
 	public void setIR(int[] a){
-		ir=a;
-	}
-	public void loadBuffer(){
-		int[] output = Arrays.concat(ir,PC);
-		out_buff.overwrite()
+		ir.overwrite(a);
 	}
 }

@@ -7,22 +7,29 @@ public class Memory {
 	private int inst_mem_size;
 	private int inst_mem_num;
 	private Bin[] registers;
-	private int PC;//TODO Initialize this. Also make this into a binary array. Will need a bintodec converter in here. 
+	private Bin PC;//TODO Initialize this. Also make this into a binary array. Will need a bintodec converter in here. 
 	//Might need to make a new class that handles binary arithmetic and binary-decimal conversion.
 	static int[][] inst_memory;
 	
 	public Memory(int rs, int rn,int ims, int imn){
-		setPC(0);
 		setRegSize(rs);
 		setRegNum(rn);
 		setInstSize(ims);
 		setInstNum(imn);
+		createPC();
+		setPC(0);
 		createRegisters();
 		createInstMem();
 		loadInstructions();
 	}
-	public void setPC(int pc){
-		PC=pc;
+	public void createPC(){
+		PC=new Bin(getInstSize());
+	}
+	public void setPC(int p){
+		PC.dec_overwrite(p);
+	}
+	public Bin getPC(){
+		return PC;
 	}
 	public void setInstSize(int ims) {
 		inst_mem_size=ims;
@@ -79,5 +86,4 @@ public class Memory {
 	public int[][] getInstMem(){
 		return inst_memory;
 	}
-	//TODO create a method for overwriting a register with decimal number as input
 }

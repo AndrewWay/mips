@@ -7,10 +7,10 @@ public class MIPS {
 		int instr_mem_size=32;//TODO Hardcode the size of the instructions into the program
 		int instr_mem_num=1;
 		//TODO Hardcode the buffer sizes into the stages
-		int if_ibs=10;
+		int if_ibs=36;
 		int if_obs=36;
-		int id_ibs=10;
-		int id_obs=10;
+		int id_ibs=36;
+		int id_obs=36;
 		int ex_ibs=10;
 		int ex_obs=10;
 		int wb_ibs=10;
@@ -28,13 +28,17 @@ public class MIPS {
 		mem.randomize_register(2);
 		mem.randomize_register(1);
 		mem.disp_registers();
-		//IF.disp_buffers();
-		//ID.disp_buffers();
-		IF.fetch();
+		System.out.println("IF BUFFERS");
+		IF.disp_buffers();
+		System.out.println("ID BUFFERS");
+		ID.disp_buffers();
+		System.out.println("RUNNING THROUGH FETCH");
+		IF.fetch(mem.getPC());
 		loadBuffer(ID,IF.getOutputBuffer());
-		System.out.println(IF.getOutputBuffer().disp());
-		//IF.disp_buffers();
-		//ID.disp_buffers();
+		System.out.println("IF BUFFERS");
+		IF.disp_buffers();
+		System.out.println("ID BUFFERS");
+		ID.disp_buffers();
 	}
 	public static void loadBuffer(Stage s,Bin buffData){//Why is this static
 		s.setInputBuffer(buffData);

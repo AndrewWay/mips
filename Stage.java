@@ -14,8 +14,8 @@ public abstract class Stage {
 		createOutputBuffer();
 	}
 	public void disp_buffers(){
-		System.out.println("INPUT BUFFER"+in_buff.disp());
-		System.out.println("OUTPUT BUFFER"+out_buff.disp());	
+		System.out.println("INPUT BUFFER"+getInputBuffer().disp());
+		System.out.println("OUTPUT BUFFER"+getOutputBuffer().disp());	
 	}
 	public void setmem(Memory m){
 		mem=m;
@@ -33,10 +33,10 @@ public abstract class Stage {
 		return inbuff_size;
 	}
 	public void createInputBuffer(){
-		in_buff=new Bin(getInputBufferSize());
+		setInputBuffer(new Bin(getInputBufferSize()));
 	}
 	public void createOutputBuffer(){
-		out_buff=new Bin(getOutputBufferSize());
+		setOutputBuffer(new Bin(getOutputBufferSize()));
 	}
 	public void setInputBuffer(Bin buffData){
 		in_buff=buffData;
@@ -52,5 +52,14 @@ public abstract class Stage {
 	}
 	public static Memory getMem(){
 		return mem;
+	}
+	public void loadBuffer(int start,int end,Bin b){
+		int[] valArr = b.getArray();
+		for(int i=start;i<=end;i++){
+			out_buff.input(i, valArr[i]);
+		}
+	}
+	public void syncBuffers(Bin b){
+		in_buff.overwrite(b.getArray());
 	}
 }

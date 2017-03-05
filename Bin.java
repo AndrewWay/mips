@@ -9,7 +9,19 @@ public class Bin {
 		this.bin_size = bin_size;
 		bin=new int[bin_size];
 	}
-	
+	public int getBinSize(){
+		return bin_size;
+	}
+	public int[] getArray(){
+		//Return the integer array containing Bin binary values
+		return bin;
+	}
+	public int evaluate(){
+		return bin_toDec(bin);
+	}
+	public void clearBin(){
+		bin=new int[bin_size];
+	}
 	public String disp(){
 		String output = "";
 		for(int i=0;i<bin_size;i++){
@@ -17,6 +29,30 @@ public class Bin {
 		}
 		output+="| val= "+Integer.toString(evaluate());
 		return output;
+	}
+	public void input(int i,int val){
+		//Update a section of a Bin with 0 or 1
+		if(val == 0 || val == 1){
+			bin[i]=val;
+		}
+		else
+		{
+			//TODO Throw InvalidBinInputException
+			System.out.println("ERROR: INVALID INPUT");
+		}
+	}
+	public void randomize(){
+		Random rand = new Random();
+		for(int i=0;i<bin_size;i++){
+			int n = rand.nextInt(99);
+			if(n>=50){
+				bin[i]=1;
+			}
+			else
+			{
+				bin[i]=0;
+			}
+		}
 	}
 	public void overwrite(int[] newVal){
 		//Overwrite an entire bin with a new integer array
@@ -34,41 +70,7 @@ public class Bin {
 			//TODO Throw BinOverFlowException
 			System.out.println("ERROR: Input Value too large for Bin");
 		}
-	}
-	public void input(int i,int val){
-		//Update a section of a Bin with 0 or 1
-		if(val == 0 || val == 1){
-			bin[i]=val;
-		}
-		else
-		{
-			//TODO Throw InvalidBinInputException
-			System.out.println("ERROR: INVALID INPUT");
-		}
-	}
-	public int[] get(){
-		//Return the integer array containing Bin binary values
-		return bin;
-	}
-	public void randomize(){
-		Random rand = new Random();
-		for(int i=0;i<bin_size;i++){
-			int n = rand.nextInt(99);
-			if(n>=50){
-				bin[i]=1;
-			}
-			else
-			{
-				bin[i]=0;
-			}
-		}
-	}
-	public int evaluate(){
-		return bin_toDec(bin);
-	}
-	public void clearBin(){
-		bin=new int[bin_size];
-	}
+	}	
 	public void dec_overwrite(int r){
 		int[] newVal = dec_toBin(r);
 		int newBinSize = Array.getLength(newVal);
@@ -86,7 +88,7 @@ public class Bin {
 			System.out.println("ERROR: Input Value too large for Bin");
 		}
 	}
-	public static int[] dec_toBin(int dec){
+	public int[] dec_toBin(int dec){
 		//determine array size needed
 		int n=0;
 		int binGuess = (int) Math.pow(2, n);
@@ -107,7 +109,7 @@ public class Bin {
 		}
 		return bin;
 	}
-	public static int bin_toDec(int[] bin){
+	public int bin_toDec(int[] bin){
 		int size = Array.getLength(bin);
 		int decimal = 0;
 		for(int i=0;i<=size-1;i++){

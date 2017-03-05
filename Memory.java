@@ -2,13 +2,26 @@
 public class Memory {
 	private int regsize;
 	private int regnum;
+	private int inst_mem_size;
+	private int inst_mem_num;
 	private Bin[] registers;
 	private Bin[] PC;//TODO Initialize this
+	static int[][] inst_memory;
 	
-	public Memory(int rs, int rn){
+	public Memory(int rs, int rn,int ims, int imn){
 		setRegSize(rs);
 		setRegNum(rn);
+		setInstSize(ims);
+		setInstNum(imn);
 		createRegisters();
+		loadInstructions();
+	}
+	private void setInstSize(int ims) {
+		inst_mem_size=ims;
+		
+	}
+	private void setInstNum(int imn) {
+		inst_mem_num=imn;
 	}
 	public void disp_registers(){
 		for(int i=0;i<getRegNum();i++){
@@ -42,5 +55,14 @@ public class Memory {
 	}
 	public void randomize_register(int i){
 		registers[i].randomize();
+	}
+	public void loadInstructions(){
+		inst_memory=new int[getInstNum()][getInstSize()];
+	}
+	private int getInstSize() {
+		return inst_mem_size;
+	}
+	private int getInstNum() {
+		return inst_mem_num;
 	}
 }

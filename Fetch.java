@@ -1,11 +1,12 @@
-import java.util.Arrays;
-
 public class Fetch extends Stage{
 
 	private Bin ir;
- 	public Fetch(int ibs, int obs,Memory m) {
-		super(ibs, obs, m);
+ 	public Fetch(Memory m) {
+		super(m);
+		this.inbuff_size=1;
+		this.outbuff_size=2;
 		ir=new Bin(getMem().getInstSize());
+		createBuffers();
 	}
 	public void fetch(Bin PC){
 		//Increment PC
@@ -16,8 +17,8 @@ public class Fetch extends Stage{
 		setIR(instruction);
 		//Load that instruction into buffer
 		
-		loadBuffer(0,ir.getBinSize()-1,ir);
-		loadBuffer(ir.getBinSize(),PC.getBinSize()-1,PC);
+		loadBuffer(0,ir);
+		loadBuffer(1,PC);
 	}
 	public Bin getIR(){
 		return ir;

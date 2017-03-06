@@ -1,30 +1,42 @@
-import java.util.Arrays;
 public abstract class Stage {
-	private int inbuff_size;
-	private int outbuff_size;
+	protected int inbuff_size;
+	protected int outbuff_size;
+	private final int DEF_BUFFER_SIZE=1;
 	private static Memory mem;
-	private Bin in_buff;
-	private Bin out_buff; 
+	private Bin[] in_buff;
+	private Bin[] out_buff; 
 	
-	public Stage(int ibs, int obs,Memory m){
+	public Stage(Memory m){
 		setmem(m);
-		setInputBufferSize(ibs);
-		setOutputBufferSize(obs);
-		createInputBuffer();
-		createOutputBuffer();
 	}
 	public void disp_buffers(){
-		System.out.println("INPUT BUFFER"+getInputBuffer().disp());
-		System.out.println("OUTPUT BUFFER"+getOutputBuffer().disp());	
+		String inputBuffer="";
+		String outputBuffer="";
+		for(int i=0;i<getInputBufferSize();i++){
+			inputBuffer+=getIBuffSeg(i).disp();
+		}
+		for(int i=0;i<getOutputBufferSize();i++){
+			outputBuffer+=getOBuffSeg(i).disp();
+		}
+		System.out.println("INPUT BUFFER"+inputBuffer);
+		System.out.println("OUTPUT BUFFER"+outputBuffer);	
 	}
 	public void setmem(Memory m){
 		mem=m;
 	}
-	public void setInputBufferSize(int ibs){
-		inbuff_size=ibs;
-	}
-	public void setOutputBufferSize(int obs){
-		outbuff_size=obs;
+	public void createBuffers(){
+		int ibb = getInputBufferSize();
+		int obb = getOutputBufferSize();
+		in_buff=new Bin[ibb];
+		out_buff=new Bin[obb];
+		for(int i=0;i<ibb;i++){
+			in_buff[i]=new Bin(DEF_BUFFER_SIZE);
+		}
+		for(int i=0;i<obb;i++){
+			out_buff[i]=new Bin(DEF_BUFFER_SIZE);
+		}
+		outbuff_size=obb;
+		inbuff_size=ibb;
 	}
 	public int getOutputBufferSize(){
 		return outbuff_size;
@@ -32,36 +44,25 @@ public abstract class Stage {
 	public int getInputBufferSize(){
 		return inbuff_size;
 	}
-	public void createInputBuffer(){
-		setInputBuffer(new Bin(getInputBufferSize()));
-	}
-	public void createOutputBuffer(){
-		setOutputBuffer(new Bin(getOutputBufferSize()));
-	}
-	public void setInputBuffer(Bin buffData){
-		in_buff=buffData;
-	}
-	public void setOutputBuffer(Bin buffData){
-		out_buff=buffData;
-	}
-	public Bin getInputBuffer(){
+	public Bin[] getInputBuffer(){
 		return in_buff;
 	}
-	public Bin getOutputBuffer(){
+	public Bin[] getOutputBuffer(){
 		return out_buff;
 	}
 	public static Memory getMem(){
 		return mem;
 	}
-	public void loadBuffer(int start,int end,Bin b){
-		int[] valArr = b.getArray();
-		System.out.println(getOutputBufferSize());
-		for(int i=start;i<=end;i++){
-			System.out.println(i);
-			out_buff.input(i, valArr[i-start]);
-		}
+	public void loadBuffer(int segID,Bin b){
+		out_buff[segID]=b;
 	}
-	public void syncBuffers(Bin b){
-		in_buff.overwrite(b.getArray());
+	public void loadBuffer(Bin[] b){
+		in_buff=b;
+	}
+	public Bin getOBuffSeg(int i){
+		return out_buff[i];
+	}
+	public Bin getIBuffSeg(int i){
+		return in_buff[i];
 	}
 }

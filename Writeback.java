@@ -1,7 +1,7 @@
 
 public class Writeback extends Stage{
 
-	public Writeback(int ibs, int obs,Memory m) {
-		super(ibs, obs, m);
+	public Writeback(Memory m) {
+		super(m);
 	}
 }

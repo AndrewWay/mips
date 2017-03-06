@@ -1,21 +1,16 @@
-import java.lang.reflect.Array;
-
-
 public class Memory {
 	private int regsize;
 	private int regnum;
-	private int inst_mem_size;
+	private final int inst_mem_size=32;
 	private int inst_mem_num;
 	private Bin control_vector;
 	private Bin[] registers;
-	private Bin PC;//TODO Initialize this. Also make this into a binary array. Will need a bintodec converter in here. 
-	//Might need to make a new class that handles binary arithmetic and binary-decimal conversion.
+	private Bin PC;
 	static int[][] inst_memory;
 	
-	public Memory(int rs, int rn,int ims, int imn){
+	public Memory(int rs, int rn, int imn){
 		setRegSize(rs);
 		setRegNum(rn);
-		setInstSize(ims);
 		setInstNum(imn);
 		createPC();
 		setPC(0);
@@ -25,7 +20,7 @@ public class Memory {
 		loadInstructions();
 	}
 	public void createPC(){
-		PC=new Bin(getInstSize());
+		PC=new Bin(getInstNum());//TODO Set PC Bin size according to the number of instructions in the instructions textfile
 	}
 	public void setPC(int p){
 		PC.dec_overwrite(p);
@@ -38,10 +33,6 @@ public class Memory {
 	}
 	public void setControlVector(int[] cv){
 		control_vector.overwrite(cv);
-	}
-	public void setInstSize(int ims) {
-		inst_mem_size=ims;
-		inst_mem_size=32;//HARDCODED INSTRUCTION SIZE. Comment this line to use custom instruction size.
 	}
 	public void setInstNum(int imn) {
 		inst_mem_num=imn;
@@ -83,6 +74,7 @@ public class Memory {
 		inst_memory=new int[getInstNum()][getInstSize()];
 	}
 	public void loadInstructions(){
+		//TODO Read instructions from a textfile, either in the form of binary or in semantics "add $1 $8 $3" etc
 		inst_memory[0]=new int[]{0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1};//TODO Read instructions from memory
 	}
 	public int getInstSize() {

@@ -1,4 +1,3 @@
-import java.io.Console;
 import java.lang.reflect.Array;
 import java.util.Random;
 
@@ -25,7 +24,6 @@ public class Bin {
 		return bin_toDec(bin);
 	}
 	public Bin extract(int start,int end){
-		System.out.println(Integer.toString(end-start+1));
 		Bin subBin = new Bin(end-start+1);
 		int[] binVal = getArray();
 		for(int i=0;i<subBin.getBinSize();i++){
@@ -53,7 +51,10 @@ public class Bin {
 		for(int i=0;i<bin_size;i++){
 			output+="|"+Integer.toString(bin[i]);
 		}
-		output+="| val= "+Integer.toString(evaluate());
+		return output+"|";
+	}
+	public String dispVal(){
+		String output=Integer.toString(evaluate());
 		return output;
 	}
 	public void input(int i,int val){

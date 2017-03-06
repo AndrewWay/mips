@@ -28,7 +28,7 @@ public class Execute extends Stage {
 			throw new RuntimeException();		
 		}
 		//MUX11
-		int[] mux11_port0 = getIBuffSeg(3).getArray();
+		int[] mux11_port0 = getIBuffSeg(3).getArray();//Make these into integers?
 		int[] mux11_port1 = getIBuffSeg(2).getArray();
 		int[] alu_input1;
 		int ALUSRC=getMem().getControlVector().getArray()[3];

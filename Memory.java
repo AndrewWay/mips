@@ -1,15 +1,19 @@
+import java.util.*;
+
 
 public class Memory extends Stage{
 	
 	Bin[] dataMemory = new Bin[10000];
-	Arrays.fill(dataMemory, new Bin(0));
-	Bin readData;
+	Bin readData = new Bin(32);
 	
 	public Memory(Firmware m) {
 		super(m);
 		this.inbuff_size=5;
 		this.outbuff_size=3;
 		createBuffers();
+		Bin testBin = new Bin(32);
+		testBin.dec_overwrite(0);
+		Arrays.fill(dataMemory, testBin);
 	}
 	
 	public void memory(){
@@ -24,15 +28,16 @@ public class Memory extends Stage{
 		
 		if(getMem().getControlVector().getArray()[5] != 0) { //MemRead
 			//Read from Data Memory
+			System.out.println("readAddress.evaluate(): " + readAddress.evaluate());
 			readData = dataMemory[readAddress.evaluate()]; //Update when data memory is constructed.
 		} else if(getMem().getControlVector().getArray()[6] != 0) { //MemWrite
 			//Write to Data Memory
 			dataMemory[writeAddress.evaluate()] = writeData;
 		}
 		
-		loadBuffer(0,getIBuffSeg(2));
-		loadBuffer(1,readData);
-		loadBuffer(2,getIBuffSeg(1));
+		loadBuffer(0,getIBuffSeg(1));
+		loadBuffer(1,getIBuffSeg(2));
+		loadBuffer(2,readData);
 		
 	}
 	

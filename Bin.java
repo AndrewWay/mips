@@ -4,7 +4,6 @@ import java.util.Random;
 public class Bin {
 	private int bin_size;
 	private int[] bin;
-	
 	public Bin(int bin_size){
 		this.bin_size = bin_size;
 		bin=new int[bin_size];
@@ -100,7 +99,6 @@ public class Bin {
 		else{
 			//TODO Throw BinOverFlowException
 			System.out.println("ERROR: Input Value too large for Bin");
-			
 		}
 	}	
 	public void dec_overwrite(int r){
@@ -119,31 +117,22 @@ public class Bin {
 		else{
 			//TODO Throw BinOverFlowException
 			System.out.println("ERROR: Input Value too large for Bin");
-			
 		}
 		System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
 	}
-	
-	public static int[] addBins(Bin first, Bin second) {
-		int dec=first.evaluate() + second.evaluate();
-		return dec_toBin(dec);
-		
-	}
-	
 	public static int[] dec_toBin(int dec){
-		
+		System.out.println(dec);
 		//determine array size needed
 		int n=0;
 		int binGuess = (int) Math.pow(2, n);
 		while(binGuess < dec){
-			n=n+1;
+			n=n+4;
 			binGuess = (int) Math.pow(2, n)-1;
 		}
-		
-		
 		int[] bin = new int[n];
 		for(int i=0;i<n;i++){
-			int term = (int) Math.pow(2,n-i-1);
+			int term = (int) Math.pow(2,n-i);
+			System.out.println("term: " + term);
 			if (term > dec){
 				bin[i]=0;
 			}
@@ -151,6 +140,7 @@ public class Bin {
 				bin[i]=1;
 				dec=dec-term;
 			}
+			System.out.println(bin[i]);
 		}
 		return bin;
 	}

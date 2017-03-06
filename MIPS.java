@@ -43,5 +43,12 @@ public class MIPS {
 		MEM.loadBuffer(EX.getOutputBuffer());
 		System.out.println("MEM BUFFERS");
 		MEM.disp_buffers();
+		System.out.println("RUNNING THROUGH MEMORY");
+		MEM.memory();
+		MEM.disp_buffers();
+		WB.loadBuffer(MEM.getOutputBuffer());
+		System.out.println("WB BUFFERS");
+		WB.disp_buffers();
+		WB.writeback();
 	}
 }

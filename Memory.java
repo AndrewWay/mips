@@ -2,7 +2,7 @@
 public class Memory extends Stage{
 	
 	Bin[] dataMemory = new Bin[10000];
-	Arrays.fill(dataMemory, new Bin(0));
+	//Arrays.fill(dataMemory, new Bin(0));
 	Bin readData;
 	
 	public Memory(Firmware m) {

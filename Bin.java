@@ -13,6 +13,10 @@ public class Bin {
 		this.bin_size = Array.getLength(binArr);
 		bin=binArr;
 	}
+	public Bin(int val,int flag){//TODO Fix this.
+		this.bin=dec_toBin(val);
+		this.bin_size=Array.getLength(this.bin);
+	}
 	public int getBinSize(){
 		return bin_size;
 	}
@@ -121,7 +125,7 @@ public class Bin {
 		int binGuess = (int) Math.pow(2, n);
 		while(binGuess < dec){
 			n=n+4;
-			binGuess = (int) Math.pow(2, n);
+			binGuess = (int) Math.pow(2, n)-1;
 		}
 		int[] bin = new int[n];
 		for(int i=0;i<n;i++){

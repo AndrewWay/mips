@@ -32,8 +32,8 @@ public class Decode extends Stage{
 		loadBuffer(0,Datapath);
 		loadBuffer(1,ReadRegister2);
 		loadBuffer(2,sign_ext_offset);
-		loadBuffer(3,Readdata1);
-		loadBuffer(4,Readdata2);
+		loadBuffer(3,Readdata2);
+		loadBuffer(4,Readdata1);
 		loadBuffer(5,PC);//Fix this ugly line
 		//ID_EX=concat(Datapath,concat(ReadRegister2,concat(sign_ext,concat(Readdata2,concat(Readdata1,PC)))));//OLD LINE. Do not use.
 		

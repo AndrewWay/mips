@@ -12,11 +12,13 @@ public class MIPS {
 		Fetch IF = new Fetch(mem);
 		Decode ID = new Decode(mem);
 		Execute EX = new Execute(mem);
+		Memory MEM = new Memory(mem);
 		Writeback WB = new Writeback(mem);
 		
 		mem.disp_registers();
-		mem.randomize_register(2);
 		mem.randomize_register(1);
+		mem.getRegister(2).dec_overwrite(10);
+		mem.getRegister(3).dec_overwrite(6);
 		mem.disp_registers();
 		System.out.println("IF BUFFERS");
 		IF.disp_buffers();
@@ -37,5 +39,9 @@ public class MIPS {
 		EX.disp_buffers();
 		System.out.println("RUNNING THROUGH EXECUTE");
 		EX.execute();
+		EX.disp_buffers();
+		MEM.loadBuffer(EX.getOutputBuffer());
+		System.out.println("MEM BUFFERS");
+		MEM.disp_buffers();
 	}
 }

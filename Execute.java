@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Execute extends Stage {
 	Bin RT,RS,RD,AddResult,Zero,ALUResult,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct;
-	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset;
+	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset,funct;
 	int RegDst,ALUOp1,ALUOp0,ALUSrc;
 	Mux m11,m12;
 	public Execute(Firmware m){
@@ -17,27 +17,18 @@ public class Execute extends Stage {
 	public void execute(){
 		readIngoingBuffer();
 		getControlVectorValues();
-		//MUX12
-		m12.setPort0(RT.getArray());
-		m12.setPort1(RD.getArray());
-		m12.setSelect(RegDst);
-		//MUX11
-		m11.setPort0(Readdata2.getArray());
-		m11.setPort1(Offset.getArray());
-		m11.setSelect(ALUSrc);
-		
-		AddResult = new Bin(addresult,0);
-		Zero = new Bin(zero);
-		ALUResult=new Bin(aluresult,0);
-		Mux12_Output = new Bin(mux12_output);
-		//ALU Control
-		Funct = Offset.extract(26, 31);//TODO Change this so you dont use a fixed integer argument
-		int funct = Funct.evaluate();
-		//ALU-------------------
-		int[] alu_input0 = getIBuffSeg(4).getArray();//input is equal to Readdata1
+		setMux();
+		addResult();
+		extractFunct();
+		ALU();
+		loadOutgoingBuffer();
+		displayOutgoingBuffer();
+	}
+	public void ALU(){
+		int[] alu_input0 = Readdata1.getArray();
+		int[] alu_input1 = m11.getOutput();
 		Bin alu0=new Bin(alu_input0);
 		Bin alu1=new Bin(alu_input1);
-		int aluresult;
 		int[] zero=new int[1];
 		if(funct==32){
 			if(alu_input0==alu_input1){
@@ -52,8 +43,26 @@ public class Execute extends Stage {
 			aluresult=0;//TODO Make ALUResult Bin null/nonsense??
 			zero[0]=0;//TODO Make zero null?
 		}
-		//Add
-		//Construct bins for buffer
+		Zero = new Bin(zero);
+		ALUResult=new Bin(aluresult,0);
+	}
+	public void extractFunct(){
+		Funct = Offset.extract(26, 31);//TODO Change this so you dont use a fixed integer argument
+		funct = Funct.evaluate();
+	}
+	public void setMux(){//TODO Bad method, clean this up.
+		//MUX12
+		m12.setPort0(RT.getArray());
+		m12.setPort1(RD.getArray());
+		m12.setSelect(RegDst);
+		//MUX11
+		m11.setPort0(Readdata2.getArray());
+		m11.setPort1(Offset.getArray());
+		m11.setSelect(ALUSrc);
+	}
+	public void addResult(){
+		addresult=pc+4*offset;
+		AddResult = new Bin(addresult,0);
 	}
 	public void getControlVectorValues(){
 		int[] cv = getMem().getControlVector().getArray();
@@ -84,7 +93,7 @@ public class Execute extends Stage {
 	}
 	public void displayOutgoingBuffer(){//TODO Delete. Redundant
 		System.out.println("Mux12 "+Mux12_Output.evaluate());
-		System.out.println("Read data2 "+alu1.evaluate());
+		System.out.println("Read data2 "+Readdata2.evaluate());
 		System.out.println("ALUResult "+ALUResult.evaluate());
 		System.out.println("Zero "+Zero.evaluate());
 		System.out.println("ADDResult "+AddResult.evaluate());

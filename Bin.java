@@ -4,7 +4,6 @@ import java.util.Random;
 public class Bin {
 	private int bin_size;
 	private int[] bin;
-	
 	public Bin(int bin_size){
 		this.bin_size = bin_size;
 		bin=new int[bin_size];
@@ -122,7 +121,6 @@ public class Bin {
 		System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
 	}
 	public static int[] dec_toBin(int dec){
-		
 		System.out.println(dec);
 		//determine array size needed
 		int n=0;

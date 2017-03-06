@@ -1,7 +1,7 @@
 public abstract class Stage {
 	protected int inbuff_size;
 	protected int outbuff_size;
-	private final int DEF_BIN_SIZE=1;//The initial size of each bin in a buffer
+	private final int DEF_BIN_VAL=0;//The initial size of each bin in a buffer
 	private static Firmware mem;
 	private Bin[] in_buff;
 	private Bin[] out_buff; 
@@ -30,10 +30,10 @@ public abstract class Stage {
 		in_buff=new Bin[ibb];
 		out_buff=new Bin[obb];
 		for(int i=0;i<ibb;i++){
-			in_buff[i]=new Bin(DEF_BIN_SIZE);
+			in_buff[i]=new Bin(DEF_BIN_VAL);
 		}
 		for(int i=0;i<obb;i++){
-			out_buff[i]=new Bin(DEF_BIN_SIZE);
+			out_buff[i]=new Bin(DEF_BIN_VAL);
 		}
 		outbuff_size=obb;
 		inbuff_size=ibb;

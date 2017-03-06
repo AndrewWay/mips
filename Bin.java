@@ -53,7 +53,7 @@ public class Bin {
 	public String disp(){
 		String output = "";
 		for(int i=0;i<bin_size;i++){
-			output+="|"+Integer.toString(bin[i]);
+			output+=Integer.toString(bin[i]);
 		}
 		return output+"|";
 	}

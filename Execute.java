@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Execute extends Stage {
-	Bin RT,RS,RD,AddResult,Zero,ALUResult,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct;
+	private Bin RT,RS,RD,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct,ALUResult,AddResult,Zero;
 	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset,funct;
 	int RegDst,ALUOp1,ALUOp0,ALUSrc;
 	Mux m11,m12;
@@ -17,6 +17,7 @@ public class Execute extends Stage {
 	public void execute(){
 		readIngoingBuffer();
 		getControlVectorValues();
+		evaluateBins();
 		setMux();
 		addResult();
 		extractFunct();
@@ -44,7 +45,9 @@ public class Execute extends Stage {
 			zero[0]=0;//TODO Make zero null?
 		}
 		Zero = new Bin(zero);
+		System.out.println(aluresult);
 		ALUResult=new Bin(aluresult,0);
+		System.out.println("ALURESULT "+AddResult.disp());
 	}
 	public void extractFunct(){
 		Funct = Offset.extract(26, 31);//TODO Change this so you dont use a fixed integer argument
@@ -59,10 +62,11 @@ public class Execute extends Stage {
 		m11.setPort0(Readdata2.getArray());
 		m11.setPort1(Offset.getArray());
 		m11.setSelect(ALUSrc);
+		Mux12_Output=new Bin(m12.getOutput());
 	}
 	public void addResult(){
 		addresult=pc+4*offset;
-		AddResult = new Bin(addresult,0);
+		AddResult = new Bin(addresult,10);
 	}
 	public void getControlVectorValues(){
 		int[] cv = getMem().getControlVector().getArray();
@@ -89,10 +93,11 @@ public class Execute extends Stage {
 		loadBuffer(3,Zero);
 		loadBuffer(2,ALUResult);
 		loadBuffer(1,Readdata2);
+		System.out.println(Mux12_Output.disp());
 		loadBuffer(0,Mux12_Output);
 	}
 	public void displayOutgoingBuffer(){//TODO Delete. Redundant
-		System.out.println("Mux12 "+Mux12_Output.evaluate());
+		//System.out.println("Mux12 "+Mux12_Output.evaluate());
 		System.out.println("Read data2 "+Readdata2.evaluate());
 		System.out.println("ALUResult "+ALUResult.evaluate());
 		System.out.println("Zero "+Zero.evaluate());

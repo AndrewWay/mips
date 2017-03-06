@@ -1,10 +1,10 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
-
 public class Execute extends Stage {
-	Bin RT,RS,RD,AddResult,Zero,ALUResult,Readdata1,Readdata2,Mux12_Output,PC,Offset;
+	Bin RT,RS,RD,AddResult,Zero,ALUResult,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct;
 	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset;
+	int RegDst,ALUOp1,ALUOp0,ALUSrc;
 	Mux m11,m12;
 	public Execute(Firmware m){
 		super(m);
@@ -16,21 +16,22 @@ public class Execute extends Stage {
 	}
 	public void execute(){
 		readIngoingBuffer();
+		getControlVectorValues();
 		//MUX12
-		//m12.setMuxPort0(RT);
-		//m12.setMuxPort1(RD);
-		//m12.setMuxOutput();
+		m12.setPort0(RT.getArray());
+		m12.setPort1(RD.getArray());
+		m12.setSelect(RegDst);
 		//MUX11
-		//m11.setMuxPort0(Readdata2);
-		//m11.setMuxPort1(Offset);
-		//m11.setMuxOutput();
+		m11.setPort0(Readdata2.getArray());
+		m11.setPort1(Offset.getArray());
+		m11.setSelect(ALUSrc);
+		
 		AddResult = new Bin(addresult,0);
 		Zero = new Bin(zero);
 		ALUResult=new Bin(aluresult,0);
 		Mux12_Output = new Bin(mux12_output);
 		//ALU Control
-		Bin test = getIBuffSeg(2);
-		Bin Funct = getIBuffSeg(2).extract(26, 31);//TODO Change this so you dont use a fixed integer argument
+		Funct = Offset.extract(26, 31);//TODO Change this so you dont use a fixed integer argument
 		int funct = Funct.evaluate();
 		//ALU-------------------
 		int[] alu_input0 = getIBuffSeg(4).getArray();//input is equal to Readdata1
@@ -53,6 +54,13 @@ public class Execute extends Stage {
 		}
 		//Add
 		//Construct bins for buffer
+	}
+	public void getControlVectorValues(){
+		int[] cv = getMem().getControlVector().getArray();
+		RegDst=cv[0];
+		ALUOp1=cv[1];
+		ALUOp0=cv[2];
+		ALUSrc=cv[3];
 	}
 	public void evaluateBins(){
 		offset = Offset.evaluate();
@@ -80,40 +88,6 @@ public class Execute extends Stage {
 		System.out.println("ALUResult "+ALUResult.evaluate());
 		System.out.println("Zero "+Zero.evaluate());
 		System.out.println("ADDResult "+AddResult.evaluate());
-	}
-	public void setMux12Output(){
-		int[] mux12_port0 = getIBuffSeg(1).getArray();//rt
-		int[] mux12_port1 = getIBuffSeg(0).getArray();//rd
-		int RegDst1 = getMem().getControlVector().getArray()[0];
-		int[] mux12_output;
-		if(RegDst1 == 1)
-		{
-			mux12_output = mux12_port1;
-		}
-		else if(RegDst1 == 0)
-		{
-			mux12_output = mux12_port0;
-		}
-		else{
-			System.out.println("BAD CONTROL VECTOR");
-			throw new RuntimeException();		
-		}
-	}
-	public void setMux11Output(){
-		int[] mux11_port0 = getIBuffSeg(3).getArray();//Make these into integers?
-		int[] mux11_port1 = getIBuffSeg(2).getArray();
-		int[] alu_input1;
-		int ALUSRC=getMem().getControlVector().getArray()[3];
-		if(ALUSRC == 1){
-			alu_input1=mux11_port1;
-		}
-		else if(ALUSRC == 0){
-			alu_input1=mux11_port0;
-		}
-		else{
-			System.out.println("BAD CONTROL VECTOR");
-			throw new RuntimeException();
-		}
 	}
 }
 

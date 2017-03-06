@@ -5,15 +5,15 @@ public class Bin {
 	private int bin_size;
 	private int[] bin;
 	
-	//public Bin(int bin_size){
-	//	this.bin_size = bin_size;
-	//	bin=new int[bin_size];
-	//}
+	public Bin(int bin_size){
+		this.bin_size = bin_size;
+		bin=new int[bin_size];
+	}
 	public Bin(int[] binArr){
 		this.bin_size = Array.getLength(binArr);
 		bin=binArr;
 	}
-	public Bin(int val){//TODO Fix this.
+	public Bin(int val,int flag){//TODO Fix this.
 		this.bin=dec_toBin(val);
 		this.bin_size=Array.getLength(this.bin);
 	}

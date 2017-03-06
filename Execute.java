@@ -73,9 +73,9 @@ public class Execute extends Stage {
 		int addresult=pc+4*offset;
 		//Construct bins for buffer
 		//TODO Make all of these Bins accessible for printing. Make them into class variables.
-		Bin AddResult = new Bin(addresult);
+		Bin AddResult = new Bin(addresult,0);
 		Bin Zero = new Bin(zero);
-		Bin ALUResult=new Bin(aluresult);
+		Bin ALUResult=new Bin(aluresult,0);
 		Bin Readdata2 = getIBuffSeg(3);
 		Bin Mux12 = new Bin(mux12_output);
 		System.out.println("Mux12 "+Mux12.evaluate());

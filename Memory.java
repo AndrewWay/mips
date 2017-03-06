@@ -1,9 +1,8 @@
 
 public class Memory extends Stage{
 	
-	Bin[] dataMemory = new Bin[10000];
-	Arrays.fill(dataMemory, new Bin(0));
-	Bin readData;
+	Bin[] dataMemory = new Bin[10000];//Are the bins inside the array initialized at any point??
+	Bin readData=new Bin(1);//Default size of array
 	
 	public Memory(Firmware m) {
 		super(m);
@@ -29,11 +28,9 @@ public class Memory extends Stage{
 			//Write to Data Memory
 			dataMemory[writeAddress.evaluate()] = writeData;
 		}
-		
-		loadBuffer(0,getIBuffSeg(2));
-		loadBuffer(1,readData);
-		loadBuffer(2,getIBuffSeg(1));
-		
+		loadBuffer(2,readData);
+		loadBuffer(1,getIBuffSeg(2));
+		System.out.println("MEMORY BUFF SEG 1: "+getIBuffSeg(2).evaluate());
+		loadBuffer(0,getIBuffSeg(0));
 	}
-	
 }

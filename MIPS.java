@@ -2,7 +2,7 @@
 public class MIPS {
 	public static void main(String[]args){
 		//Hardware specification parameters
-		int register_size=4;
+		int register_size=5;
 		int register_quantity=5;
 		int instr_mem_num=1;
 		
@@ -50,5 +50,11 @@ public class MIPS {
 		System.out.println("WB BUFFERS");
 		WB.disp_buffers();
 		WB.writeback();
+		//Get write register
+		int WriteData = WB.getMux14Output();
+		int WriteRegister = WB.getMux12Output();
+		System.out.println("WRITEDATA "+WriteData);
+		System.out.println("WRITEREG "+WriteRegister);
+		mem.overwrite_register(WriteRegister,WriteData);
 	}
 }

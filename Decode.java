@@ -1,5 +1,6 @@
 public class Decode extends Stage{
-
+	
+	private Bin WriteRegister;
 	public Decode(Firmware m) {
 		super(m);
 		this.inbuff_size=2;
@@ -66,5 +67,8 @@ public class Decode extends Stage{
 			control_vector = new int[9];
 		}
 		return control_vector;
+	}
+	public void setWriteRegister(int reg){
+		
 	}
 }

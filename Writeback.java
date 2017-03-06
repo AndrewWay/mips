@@ -1,6 +1,7 @@
 
 public class Writeback extends Stage{
-
+	int mux14_output;
+	Bin Mux12Output;
 	public Writeback(Firmware m) {
 		super(m);
 		inbuff_size=3;//rd|ALUResult|Readdata
@@ -9,10 +10,10 @@ public class Writeback extends Stage{
 	public void writeback(){
 		Bin Readdata = getIBuffSeg(2);
 		Bin ALUResult = getIBuffSeg(1);
-		Bin Datapath = getIBuffSeg(0);
+		System.out.println("ALURESULT IN WB "+ALUResult.evaluate());
+		Mux12Output = getIBuffSeg(0);
 		int mux14_port1 = Readdata.evaluate();//Make this int or int[]?
 		int mux14_port0 = ALUResult.evaluate();
-		int mux14_output;
 		Bin control_vector = getMem().getControlVector();
 		int MemtoReg = control_vector.getArray()[8];
 		if(MemtoReg == 1){
@@ -25,5 +26,12 @@ public class Writeback extends Stage{
 			System.out.println("Invalid Control vector value");
 			System.out.println("FATAL SYSTEM ERROR");
 		}
+		System.out.println("MUX14 OUTPUT: "+mux14_output);
+	}
+	public int getMux14Output(){
+		return mux14_output;
+	}
+	public int getMux12Output(){
+		return Mux12Output.evaluate();
 	}
 }

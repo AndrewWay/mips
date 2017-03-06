@@ -103,6 +103,7 @@ public class Bin {
 		}
 	}	
 	public void dec_overwrite(int r){
+		System.out.println("INPUT REG VALUE "+r);
 		int[] newVal = dec_toBin(r);
 		int newBinSize = Array.getLength(newVal);
 		if(newBinSize==bin_size){
@@ -118,6 +119,7 @@ public class Bin {
 			//TODO Throw BinOverFlowException
 			System.out.println("ERROR: Input Value too large for Bin");
 		}
+		System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
 	}
 	public int[] dec_toBin(int dec){
 		//determine array size needed
@@ -129,7 +131,7 @@ public class Bin {
 		}
 		int[] bin = new int[n];
 		for(int i=0;i<n;i++){
-			int term = (int) Math.pow(2,n-i-1);
+			int term = (int) Math.pow(2,n-i);
 			if (term > dec){
 				bin[i]=0;
 			}

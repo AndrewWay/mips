@@ -70,6 +70,9 @@ public class Firmware {
 	public void overwrite_register(int i,int[] d){
 		registers[i].overwrite(d);
 	}
+	public void overwrite_register(int i,int d){
+		registers[i].dec_overwrite(d);
+	}
 	public void randomize_register(int i){
 		registers[i].randomize();
 	}

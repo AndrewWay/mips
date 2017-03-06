@@ -1,16 +1,22 @@
 public class Fetch extends Stage{
 
-	private Bin ir;
- 	public Fetch(Firmware m) {
+	private Bin ir, PC;
+	private Mux MUX3;
+ 	public Fetch(Firmware m, Bin pval) {
 		super(m);
 		ir=new Bin(getMem().getInstSize());
+		PC=pval;
+		MUX3=new Mux();
+		MUX3.setPort0(PC.getArray());
 		this.inbuff_size=1;
 		this.outbuff_size=2;
 		createBuffers();
 	}
-	public void fetch(Bin PC){
-		//Increment PC
-		//incrementPC();//TODO Uncomment this and get it working
+	public void fetch(){
+		PC=MUX3.getOutput(); //Get the PC register value
+		
+		MUX3.setPort0(Bin.dec_toBin(PC.evaluate()+4)); 		//Increment PC
+
 		//Obtain the instruction located at PC
 		Firmware m = getMem();
 		int[] instruction = m.getInstMem()[PC.evaluate()];

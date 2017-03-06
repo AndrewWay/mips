@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.util.Arrays;
 
+
 public class Execute extends Stage {
 	Bin RT,RS,RD,AddResult,Zero,ALUResult,Readdata1,Readdata2,Mux12_Output,PC,Offset;
 	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset;

@@ -93,8 +93,8 @@ public class Bin {
 		}
 		else if(newBinSize<bin_size){
 			clearBin();
-			for(int i=0;i<newBinSize;i++){
-				bin[i]=newVal[i];
+			for(int i=bin_size-newBinSize;i<bin_size;i++){
+				bin[i]=newVal[i-(bin_size-newBinSize)];
 			}
 		}
 		else{
@@ -111,8 +111,8 @@ public class Bin {
 		}
 		else if(newBinSize<bin_size){
 			clearBin();
-			for(int i=0;i<newBinSize;i++){
-				bin[i]=newVal[i];
+			for(int i=bin_size-newBinSize;i<bin_size;i++){
+				bin[i]=newVal[i-(bin_size-newBinSize)];
 			}
 		}
 		else{
@@ -121,7 +121,9 @@ public class Bin {
 		}
 		System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
 	}
-	public int[] dec_toBin(int dec){
+	public static int[] dec_toBin(int dec){
+		
+		System.out.println(dec);
 		//determine array size needed
 		int n=0;
 		int binGuess = (int) Math.pow(2, n);
@@ -132,6 +134,7 @@ public class Bin {
 		int[] bin = new int[n];
 		for(int i=0;i<n;i++){
 			int term = (int) Math.pow(2,n-i);
+			System.out.println("term: " + term);
 			if (term > dec){
 				bin[i]=0;
 			}
@@ -139,10 +142,11 @@ public class Bin {
 				bin[i]=1;
 				dec=dec-term;
 			}
+			System.out.println(bin[i]);
 		}
 		return bin;
 	}
-	public int bin_toDec(int[] bin){
+	public static int bin_toDec(int[] bin){
 		int size = Array.getLength(bin);
 		int decimal = 0;
 		for(int i=0;i<=size-1;i++){

@@ -9,7 +9,7 @@ public class MIPS {
 		//Create memory
 		Firmware mem = new Firmware(register_size,register_quantity,instr_mem_num);
 		//Create the stages
-		Fetch IF = new Fetch(mem);
+		Fetch IF = new Fetch(mem,Bin.dec_toBin(0));
 		Decode ID = new Decode(mem);
 		Execute EX = new Execute(mem);
 		Memory MEM = new Memory(mem);
@@ -25,7 +25,7 @@ public class MIPS {
 		System.out.println("ID BUFFERS");
 		ID.disp_buffers();
 		System.out.println("RUNNING THROUGH FETCH");
-		IF.fetch(mem.getPC());
+		IF.fetch();
 		ID.loadBuffer(IF.getOutputBuffer());
 		System.out.println("IF BUFFERS");
 		IF.disp_buffers();

@@ -30,6 +30,12 @@ public class MIPS {
 		System.out.println("ID BUFFERS");
 		ID.disp_buffers();
 		ID.decode();
+		System.out.println("ID BUFFERS");
 		ID.disp_buffers();
+		EX.loadBuffer(ID.getOutputBuffer());
+		System.out.println("EX BUFFERS");
+		EX.disp_buffers();
+		System.out.println("RUNNING THROUGH EXECUTE");
+		EX.execute();
 	}
 }

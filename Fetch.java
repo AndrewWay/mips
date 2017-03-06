@@ -3,9 +3,9 @@ public class Fetch extends Stage{
 	private Bin ir;
  	public Fetch(Memory m) {
 		super(m);
+		ir=new Bin(getMem().getInstSize());
 		this.inbuff_size=1;
 		this.outbuff_size=2;
-		ir=new Bin(getMem().getInstSize());
 		createBuffers();
 	}
 	public void fetch(Bin PC){

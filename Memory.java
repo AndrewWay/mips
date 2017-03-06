@@ -34,6 +34,9 @@ public class Memory {
 	public void setControlVector(int[] cv){
 		control_vector.overwrite(cv);
 	}
+	public Bin getControlVector(){
+		return control_vector;
+	}
 	public void setInstNum(int imn) {
 		inst_mem_num=imn;
 	}
@@ -75,7 +78,7 @@ public class Memory {
 	}
 	public void loadInstructions(){
 		//TODO Read instructions from a textfile, either in the form of binary or in semantics "add $1 $8 $3" etc
-		inst_memory[0]=new int[]{0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,1,1,1,1,1,1};//TODO Read instructions from memory
+		inst_memory[0]=new int[]{0,0,0,0,0,0,0,0,0,1,0,0,0,0,1,1,0,0,0,0,1,0,0,0,0,0,1,0,0,0,0,0};//TODO Read instructions from memory
 	}
 	public int getInstSize() {
 		return inst_mem_size;

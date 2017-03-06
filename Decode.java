@@ -1,6 +1,6 @@
 public class Decode extends Stage{
 
-	public Decode(Memory m) {
+	public Decode(Firmware m) {
 		super(m);
 		this.inbuff_size=2;
 		this.outbuff_size=6;

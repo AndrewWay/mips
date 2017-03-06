@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public class Execute extends Stage {
 
-	public Execute(Memory m) {
+	public Execute(Firmware m) {
 		super(m);
 		this.inbuff_size=6;//rd|rt|ext_offset|readdata2|readdata1|pc
 		this.outbuff_size=5;

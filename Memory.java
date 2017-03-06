@@ -8,6 +8,8 @@ public class Memory extends Stage{
 		createBuffers();
 	}
 	
-	
+	public void memory(){
+		
+	}
 	
 }

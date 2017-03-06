@@ -7,7 +7,7 @@ public class MIPS {
 		int instr_mem_num=1;
 		
 		//Create memory
-		Memory mem = new Memory(register_size,register_quantity,instr_mem_num);
+		Firmware mem = new Firmware(register_size,register_quantity,instr_mem_num);
 		//Create the stages
 		Fetch IF = new Fetch(mem);
 		Decode ID = new Decode(mem);

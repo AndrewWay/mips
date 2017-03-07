@@ -79,11 +79,11 @@ public class Bin {
 		for(int i=0;i<bin_size;i++){
 			int n = rand.nextInt(99);
 			if(n>=50){
-				bin[i]=1;
+				this.bin[i]=1;
 			}
 			else
 			{
-				bin[i]=0;
+				this.bin[i]=0;
 			}
 		}
 	}
@@ -106,9 +106,7 @@ public class Bin {
 		}
 	}	
 	public void dec_overwrite(int r){
-		System.out.println("INPUT REG VALUE "+r);
 		int[] newVal = dec_toBin(r);
-		System.out.println(Arrays.toString(newVal));
 		int newBinSize = Array.getLength(newVal);
 		if(newBinSize==bin_size){
 			bin=newVal;
@@ -116,15 +114,32 @@ public class Bin {
 		else if(newBinSize<bin_size){
 			clearBin();
 			for(int i=bin_size-newBinSize;i<bin_size;i++){
-				bin[i]=newVal[i-(bin_size-newBinSize)];
+				input(i,newVal[i-(bin_size-newBinSize)]);
+			}
+			if(newVal[0]==1){
+				//Flush with 1s
+				for(int i=0;i<bin_size-newBinSize;i++){
+					input(i,1);
+				}
 			}
 		}
 		else{
 			//TODO Throw BinOverFlowException
-			System.out.println("ERROR: Input Value too large for Bin");
-			
+			System.out.println("WARNING: Input Value too large for Bin");
+			clearBin();
+			for(int i=0;i<bin_size;i++){
+				input(i,newVal[i-(bin_size-newBinSize)]);
+			}
+			if(newVal[0]==1){
+				//Flush with 1s
+				for(int i=0;i<bin_size-newBinSize;i++){
+					input(i,1);
+				}
+			}
+			if(newVal[0]==1&&bin[0]==0){
+				System.out.println("WARNING: Due to small bin size, the number being returned has been chopped");
+			}
 		}
-		System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
 	}
 	
 	public static int[] addBins(Bin first, Bin second) {
@@ -133,7 +148,6 @@ public class Bin {
 	}
 	
 	public static int[] dec_toBin(int dec){
-		
 		//determine array size needed
 		boolean negate=false;
 		if(dec<0){
@@ -162,21 +176,22 @@ public class Bin {
 		}
 		return bin;
 	}
-	public static int bin_toDec(int[] bin){
-		int size = Array.getLength(bin);
+	public static int bin_toDec(int[] b){
+		int[] barr = new int[Array.getLength(b)];
+		System.arraycopy( b, 0, barr, 0, b.length );
+		int size = Array.getLength(barr);
 		int decimal = 0;
 		int parity;
-		if(bin[0]==1){
+		if(barr[0]==1){
 			parity=-1;
-			bin=negate(bin);
+			barr=negate(barr);
 		}
 		else{
 			parity=1;
 		}
 		for(int i=0;i<=size-1;i++){
-			//System.out.println(bin[i]);
 			int term = (int) Math.pow(2, size-1-i);
-			decimal=decimal+bin[i]*term;//Does not account for negative numbers
+			decimal=decimal+barr[i]*term;//Does not account for negative numbers
 		}
 		return parity*decimal;
 	}

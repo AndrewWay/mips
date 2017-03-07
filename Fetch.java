@@ -30,8 +30,6 @@ public class Fetch extends Stage{
 		instruction = in.nextLine();
 		parseInput(instruction);
 		
-		System.out.println(ir.disp());
-		
 		
 		//Load that instruction into buffer
 		
@@ -40,9 +38,6 @@ public class Fetch extends Stage{
 	}
 	public Bin getIR(){
 		return ir;
-	}
-	public void setIR(int[] a){
-		ir.overwrite(a);
 	}
 	
 	private void parseInput(String instr){

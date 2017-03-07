@@ -33,13 +33,30 @@ public class MIPS {
 		Memory MEM = new Memory(mem);
 		Writeback WB = new Writeback(mem);
 		
-		//System.out.println("Please input data memory in format <address> <value>");
-		//System.out.println("Input null field when finished");
-		//String line;
-		//while(!(line = in.nextLine()).isEmpty()){
-		//	String[] parse = line.split(" ");
+		System.out.println("Please input data memory in format <address> <value>");
+		System.out.println("Input null field when finished");
+		String line;
+		while(!(line = in.nextLine()).isEmpty()){
+			String[] parse = line.split(" ");
 			
-		//}
+			int address;
+			if(parse[0].contains("0x")){
+				parse[0]=parse[0].substring(2);
+				int[] binArr = new int[parse[0].length()];
+				for(int i=0; i<parse[0].length()-1; i++) {
+					binArr[parse[0].length()-1-i]=Integer.parseInt(parse[0].substring(i, i+1));
+				}
+				binArr[parse[0].length()-1]=Integer.parseInt(parse[0].substring(parse[0].length()-1));
+				address=Bin.bin_toDec(binArr);
+			}
+			else {
+				address=Integer.parseInt(parse[0]);
+			}
+			
+			int value=Integer.parseInt(parse[1]);
+			
+			MEM.writeData(address, value);
+		}
 		
 		//mem.disp_registers();
 		//mem.randomize_register(1);
@@ -66,9 +83,9 @@ public class MIPS {
 			
 			while(true) {
 				System.out.println("Please select option to continue: (Select number)");
-				System.out.print("	1. Display Full Trace.\n	2. Display Memory Registers\n	3. Display Memory Buffers\n	4. Input next instruction\n	5.Restart\n");
+				System.out.print("	1. Display Full Trace.\n	2. Display Memory Registers\n	3. Display Memory Buffers\n	4. Read Memory Address\n	5. Input next instruction\n	6. Exit\n");
 				
-				String line = in.nextLine();
+				line = in.nextLine();
 				
 				int c = Integer.parseInt(line);
 				if(c==1) {
@@ -94,7 +111,7 @@ public class MIPS {
 					
 					System.out.println("ID/EX Input Buffer: ");
 					System.out.print("**********************************************************\n*");
-					System.out.println("Format: IR[15-11] | IR[20-16] | Sign Extended IR[15-0] | ReadData2 | ReadData1 | PC+4");
+					System.out.println("Format: IR[15-11] | IR[20-16] | Sign Extended IR[15-0] | ReadData2 | ReadData1 | PC+4 | Control Vector (EX, MEM, WB)");
 					System.out.print("Binary: ");
 					for (int i=0; i<EX.getInputBufferSize();i++) {
 						System.out.print(EX.getInputBuffer()[i].disp());
@@ -108,7 +125,7 @@ public class MIPS {
 					
 					System.out.println("EX/MEM Input Buffer: ");
 					System.out.print("**********************************************************\n*");
-					System.out.println("Format: Mux12 Output | ReadData2 | ALUResult | Zero | AddResult");
+					System.out.println("Format: Mux12 Output | ReadData2 | ALUResult | Zero | AddResult | Control Vector (MEM, WB)");
 					System.out.print("Binary: ");
 					for (int i=0; i<MEM.getInputBufferSize();i++) {
 						System.out.print(MEM.getInputBuffer()[i].disp());
@@ -122,7 +139,7 @@ public class MIPS {
 					
 					System.out.println("MEM/WB Input Buffer: ");
 					System.out.print("**********************************************************\n*");
-					System.out.println("Format: Mux12 Output | ALU Result | ReadData");
+					System.out.println("Format: Mux12 Output | ALU Result | ReadData | Control Vector (WB)");
 					System.out.print("Binary: ");
 					for (int i=0; i<WB.getInputBufferSize();i++) {
 						System.out.print(WB.getInputBuffer()[i].disp());
@@ -135,10 +152,31 @@ public class MIPS {
 					System.out.print("**********************************************************\n");
 				}
 				else if(c==4){
-					break;
+					System.out.println("Please input data memory address in format <address>");
+					line = in.nextLine();
+					int address;
+					if(line.contains("0x")){
+						line=line.substring(2);
+						int[] binArr = new int[line.length()];
+						for(int i=0; i<line.length()-1; i++) {
+							binArr[line.length()-1-i]=Integer.parseInt(line.substring(i, i+1));
+						}
+						binArr[line.length()-1]=Integer.parseInt(line.substring(line.length()-1));
+						address=Bin.bin_toDec(binArr);
+					}
+					else {
+						address=Integer.parseInt(line);
+					}
+				
+					System.out.println("Mem Address " + line + " stores " + Bin.bin_toDec(MEM.getReadData(address).getArray()));
+				
 				}
+				
 				else if(c==5){
 					break;
+				}
+				else if(c==6){
+					System.exit(1);
 				}
 				else {
 					System.out.println("Please input valid integer.");

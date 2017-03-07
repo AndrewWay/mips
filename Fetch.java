@@ -107,7 +107,7 @@ public class Fetch extends Stage{
 			ir.overwrite_section(16, imm);
 			
 			System.out.println("Semantics: ");
-			System.out.println("R"+rt.evaluate()+" <- Mem[R"+rs.evaluate()+" "+imm.evaluate()+"]");
+			System.out.println("R"+rt.evaluate()+" <- Mem[R"+rs.evaluate()+" + "+imm.evaluate()+"]");
 		}
 		else if (parse[0].equalsIgnoreCase("sw")) {
 			Bin imm = new Bin(16);

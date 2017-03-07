@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Memory extends Stage{
 	
@@ -7,27 +8,32 @@ public class Memory extends Stage{
 	
 	public Memory(Firmware m) {
 		super(m);
-		this.inbuff_size=5;
-		this.outbuff_size=3;
+		this.inbuff_size=6;
+		this.outbuff_size=4;
 		createBuffers();
+		//Assume data starts as zeros
+		for(int i = 0; i<dataMemory.length; i++) {
+			dataMemory[i]=new Bin(32);
+		}
 	}
 	
 	public void memory(){
-		CV=getMem().getControlVector();
+		//CV=getMem().getControlVector();
 		readIngoingBuffer();
 		andGate();
 		Bin writeData = Readdata2; //Data to write
 		Bin readAddress = ALUResult, writeAddress = ALUResult; //Address for read or write
-		if(CV.getArray()[5] != 0) { //MemRead
+		if(CV.getArray()[1] != 0) { //MemRead
 			//Read from Data Memory
 			readData = dataMemory[readAddress.evaluate()]; //Update when data memory is constructed.
-		} else if(CV.getArray()[6] != 0) { //MemWrite
+		} else if(CV.getArray()[2] != 0) { //MemWrite
 			//Write to Data Memory
 			dataMemory[writeAddress.evaluate()] = writeData;
 		}
 		loadOutgoingBuffer();
 	}
 	public void loadOutgoingBuffer(){
+		loadBuffer(3,new Bin(Arrays.copyOfRange(CV.getArray(),3,CV.getArray().length)));
 		loadBuffer(2,readData);
 		loadBuffer(1,getIBuffSeg(2));
 		loadBuffer(0,getIBuffSeg(0));
@@ -44,16 +50,19 @@ public class Memory extends Stage{
 		ALUResult=getIBuffSeg(2);
 		Zero=getIBuffSeg(3);
 		AddResult=getIBuffSeg(4);
-		CV=getIBuffSeg(5);;
+		CV=getIBuffSeg(5);
+		
+		System.out.println("CV");
+		for(int j=0; j<CV.getBinSize(); j++){
+			System.out.println(CV.getArray()[j]);
+		}
 	}
 	public Bin getReadData(int i){
 		return dataMemory[i];
 	}
-	public void writeData(int i,Bin b){
-		if(b.getBinSize()==32){
-			dataMemory[i]=b;//Return 32 bit Bin
-		}
-		else
-			System.out.println("MEMORY WRITE ERROR: Input data not 32bits");
+	public void writeData(int i,int v){
+
+			dataMemory[i].dec_overwrite(v);//Return 32 bit Bin
 	}
+
 }

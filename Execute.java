@@ -9,7 +9,7 @@ public class Execute extends Stage {
 	public Execute(Firmware m){
 		super(m);
 		this.inbuff_size=7;//rd|rt|ext_offset|readdata2|readdata1|pc|control vector
-		this.outbuff_size=5;
+		this.outbuff_size=6;
 		createBuffers();
 		m11=new Mux();
 		m12=new Mux();
@@ -109,12 +109,12 @@ public class Execute extends Stage {
 		RT = getIBuffSeg(1);
 		RD = getIBuffSeg(0);
 	}
-	public void loadOutgoingBuffer(){
+	public void loadOutgoingBuffer(){;
+		loadBuffer(5,new Bin(Arrays.copyOfRange(CV.getArray(),4,CV.getArray().length)));
 		loadBuffer(4,AddResult);
 		loadBuffer(3,Zero);
 		loadBuffer(2,ALUResult);
 		loadBuffer(1,Readdata2);
-		System.out.println(Mux12_Output.disp());
 		loadBuffer(0,Mux12_Output);
 	}
 	public void displayOutgoingBuffer(){//TODO Delete. Redundant

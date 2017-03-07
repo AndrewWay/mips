@@ -65,6 +65,10 @@ public class Decode extends Stage{
 			//Empty array. Fall-back assignment
 			control_vector = new int[9];
 		}
+		
+		System.out.println("Control Vector: ");
+		System.out.println("");
+		
 		return control_vector;
 	}
 	public void setWriteRegister(int reg){

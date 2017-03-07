@@ -18,6 +18,8 @@ public class Memory extends Stage{
 	}
 	
 	public void memory(){
+		System.out.println("MEM STAGE\n\n");
+		
 		//CV=getMem().getControlVector();
 		readIngoingBuffer();
 		andGate();

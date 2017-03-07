@@ -15,6 +15,8 @@ public class Execute extends Stage {
 		m12=new Mux();
 	}
 	public void execute(){
+		System.out.println("\n\nEX STAGE \n\n");
+		
 		readIngoingBuffer();
 		getControlVectorValues();
 		evaluateBins();

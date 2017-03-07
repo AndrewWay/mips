@@ -19,6 +19,8 @@ public class Fetch extends Stage{
 		in=new Scanner(System.in);
 	}
 	public void fetch(){
+		System.out.println("\n\nFE STAGE\n\n");
+		
 		PC.overwrite(MUX3.getOutput()); //Get the PC register value
 		
 		PC.overwrite(Bin.dec_toBin(PC.evaluate()+4));
@@ -29,7 +31,7 @@ public class Fetch extends Stage{
 		//int[] instruction = m.getInstMem()[PC.evaluate()];
 		
 		//Instead of fetching our instructions from an instruction memory, the user inputs instructions one by one.
-		System.out.print("Next instruction: ");
+		System.out.print("Input next instruction: (op opr1 opr2 opr3)");
 		instruction = in.nextLine();
 		parseInput(instruction);
 		

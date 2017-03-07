@@ -10,6 +10,8 @@ public class Writeback extends Stage{
 		m14=new Mux();
 	}
 	public void writeback(){
+		System.out.println("\n\nWB STAGE\n\n");
+		
 		Bin Readdata = getIBuffSeg(2);
 		Bin ALUResult = getIBuffSeg(1);
 		System.out.println("ALURESULT IN WB "+ALUResult.evaluate());

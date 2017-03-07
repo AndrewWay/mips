@@ -2,7 +2,7 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Execute extends Stage {
-	private Bin RT,RS,RD,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct,ALUResult,AddResult,Zero,CV;
+	private Bin RT,RS,RD,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct,ALUResult,AddResult,Zero,CV,alu0,alu1;
 	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset,funct,op;
 	int RegDst,ALUOp1,ALUOp0,ALUSrc;
 	Mux m11,m12;
@@ -25,13 +25,39 @@ public class Execute extends Stage {
 		extractFunct();
 		ALU();
 		loadOutgoingBuffer();
-		displayOutgoingBuffer();
+		
+		//Display EX outputs
+		System.out.println("\nData Ports :");
+		System.out.println("Inputs");
+		System.out.print("	ALU 0 : " + alu0.evaluate() + "\n	ALU 1 : " + alu1.evaluate() + "\n	Adder 0 : " + pc +  "\n	Adder 1 :" + offset*4 + "\n	ALU Control : " + funct + "\n");
+		System.out.println("Outputs");
+		System.out.print("	Add Result : " + AddResult.evaluate() + "\n	ALU Result : " + ALUResult.evaluate()+"\n	Zero : " + Zero.evaluate() + "\n");
+		
+		System.out.println("\nRelevant Data Paths: ");
+		System.out.print("	Multiplexer 12 Output : " + Mux12_Output.evaluate() + "\n");
+		
+		System.out.println("\nRelevant Control Vector Components: ");
+		System.out.print("	RegDst : " + RegDst + "\n	ALUOp1 : " + ALUOp1 + "\n	ALUOp0 : " + ALUOp0 + "\n	ALUSrc : " + ALUSrc + "\n");
+		
+		System.out.println("\nID/EX Buffer: ");
+		System.out.print("**********************************************************\n");
+		System.out.println("Format: IR[15-11] | IR[20-16] | Sign Extended IR[15-0] | ReadData2 | ReadData1 | PC+4 | Control Vector (MEM, WB)");
+		System.out.print("Binary: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].disp());
+		}
+		System.out.print("\nDecimal: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].dispVal());
+		}
+		System.out.println();
+		System.out.print("**********************************************************\n");
 	}
 	public void ALU(){
 		int[] alu_input0 = Readdata1.getArray();
 		int[] alu_input1 = m11.getOutput();
-		Bin alu0=new Bin(alu_input0);
-		Bin alu1=new Bin(alu_input1);
+		alu0=new Bin(alu_input0);
+		alu1=new Bin(alu_input1);
 		int[] zero=new int[1];
 		if(ALUOp1==1) { //ALU Control
 			if(funct==32){ //Funct of add
@@ -67,12 +93,10 @@ public class Execute extends Stage {
 			zero[0]=0; //unimportant
 		}
 		Zero = new Bin(zero);
-		System.out.println(aluresult);
 		ALUResult=new Bin(aluresult,0);
-		System.out.println("ALURESULT "+AddResult.disp());
 	}
 	public void extractFunct(){
-		Funct = Offset.extract(21, 31);//TODO Change this so you dont use a fixed integer argument
+		Funct = Offset.extract(26, 31);//TODO Change this so you dont use a fixed integer argument
 		funct = Funct.evaluate();
 	}
 	public void setMux(){//TODO Bad method, clean this up.
@@ -119,12 +143,6 @@ public class Execute extends Stage {
 		loadBuffer(1,Readdata2);
 		loadBuffer(0,Mux12_Output);
 	}
-	public void displayOutgoingBuffer(){//TODO Delete. Redundant
-		//System.out.println("Mux12 "+Mux12_Output.evaluate());
-		System.out.println("Read data2 "+Readdata2.evaluate());
-		System.out.println("ALUResult "+ALUResult.evaluate());
-		System.out.println("Zero "+Zero.evaluate());
-		System.out.println("ADDResult "+AddResult.evaluate());
-	}
+
 }
 

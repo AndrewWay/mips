@@ -31,8 +31,9 @@ public class Execute extends Stage {
 		Bin alu0=new Bin(alu_input0);
 		Bin alu1=new Bin(alu_input1);
 		int[] zero=new int[1];
-		if(ALUOp1==1) {
-			if(funct==32){
+		
+		if(ALUOp1==1) { //ALU Control
+			if(funct==32){ //Funct of add
 				if(alu_input0==alu_input1){
 					zero[0]=1;
 				}
@@ -51,9 +52,19 @@ public class Execute extends Stage {
 				aluresult=alu0.evaluate()-alu1.evaluate();
 			}
 		}
-		else if (ALUOp0==0){
+		else if (ALUOp0==0){ //beq is only possibility
 			aluresult=0;//TODO Make ALUResult Bin null/nonsense??
-			zero[0]=0;//TODO Make zero null?
+			if (alu_input0==alu_input1){
+				zero[0]=1;
+			}
+			else {
+				zero[0]=0;
+			}
+		}
+		else {
+			//lw or sw, ALU gives out alu0 value
+			aluresult=alu0.evaluate();
+			zero[0]=0; //unimportant
 		}
 		Zero = new Bin(zero);
 		System.out.println(aluresult);

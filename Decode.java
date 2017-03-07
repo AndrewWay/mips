@@ -4,7 +4,7 @@ public class Decode extends Stage{
 	public Decode(Firmware m) {
 		super(m);
 		this.inbuff_size=2;
-		this.outbuff_size=6;
+		this.outbuff_size=7;
 		createBuffers();
 	}
 	public void decode(){
@@ -35,7 +35,8 @@ public class Decode extends Stage{
 		loadBuffer(2,sign_ext_offset);
 		loadBuffer(3,Readdata2);
 		loadBuffer(4,Readdata1);
-		loadBuffer(5,PC);	
+		loadBuffer(5,PC);
+		loadBuffer(6, getMem().getControlVector());
 		System.out.printf("OP %d RS %d RT %d RD %d SHAMT %d FUNCT %d\n", op,rs,rt,rd,shamt,funct);
 		//Set control vector in memory
 		getMem().setControlVector(processOP(op));

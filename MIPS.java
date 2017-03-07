@@ -2,8 +2,8 @@
 public class MIPS {
 	public static void main(String[]args){
 		//Hardware specification parameters
-		int register_size=5;
-		int register_quantity=5;
+		int register_size=32;
+		int register_quantity=30;
 		int instr_mem_num=1;
 		
 		//Create memory

@@ -105,7 +105,7 @@ public class Bin {
 		}
 	}	
 	public void dec_overwrite(int r){
-		System.out.println("INPUT REG VALUE "+r);
+		//System.out.println("INPUT REG VALUE "+r);
 		int[] newVal = dec_toBin(r);
 		int newBinSize = Array.getLength(newVal);
 		if(newBinSize==bin_size){
@@ -122,7 +122,7 @@ public class Bin {
 			System.out.println("ERROR: Input Value too large for Bin");
 			
 		}
-		System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
+		//System.out.println("RESULTING BIN VAL: "+bin_toDec(bin));
 	}
 	
 	public static int[] addBins(Bin first, Bin second) {

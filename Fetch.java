@@ -52,9 +52,9 @@ public class Fetch extends Stage{
 			Bin shamt = new Bin(5);
 			
 			op.dec_overwrite(0);
-			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
-			rt.dec_overwrite(Integer.parseInt(parse[3])-1);
-			rd.dec_overwrite(Integer.parseInt(parse[1])-1);
+			rs.dec_overwrite(Integer.parseInt(parse[2]));
+			rt.dec_overwrite(Integer.parseInt(parse[3]));
+			rd.dec_overwrite(Integer.parseInt(parse[1]));
 			shamt.dec_overwrite(0);
 			funct.dec_overwrite(32);
 			
@@ -71,9 +71,9 @@ public class Fetch extends Stage{
 			Bin shamt = new Bin(5);
 			
 			op.dec_overwrite(0);
-			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
-			rt.dec_overwrite(Integer.parseInt(parse[3])-1);
-			rd.dec_overwrite(Integer.parseInt(parse[1])-1);
+			rs.dec_overwrite(Integer.parseInt(parse[2]));
+			rt.dec_overwrite(Integer.parseInt(parse[3]));
+			rd.dec_overwrite(Integer.parseInt(parse[1]));
 			shamt.dec_overwrite(0);
 			funct.dec_overwrite(34);
 			
@@ -88,8 +88,8 @@ public class Fetch extends Stage{
 			Bin imm = new Bin(16);
 			
 			op.dec_overwrite(35);
-			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
-			rt.dec_overwrite(Integer.parseInt(parse[1])-1);
+			rs.dec_overwrite(Integer.parseInt(parse[2]));
+			rt.dec_overwrite(Integer.parseInt(parse[1]));
 			imm.dec_overwrite(Integer.parseInt(parse[3]));
 			
 			ir.overwrite_section(0, op);
@@ -101,8 +101,8 @@ public class Fetch extends Stage{
 			Bin imm = new Bin(16);
 			
 			op.dec_overwrite(43);
-			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
-			rt.dec_overwrite(Integer.parseInt(parse[1])-1);
+			rs.dec_overwrite(Integer.parseInt(parse[2]));
+			rt.dec_overwrite(Integer.parseInt(parse[1]));
 			imm.dec_overwrite(Integer.parseInt(parse[3]));
 
 			
@@ -115,8 +115,8 @@ public class Fetch extends Stage{
 			Bin imm = new Bin(16);
 			
 			op.dec_overwrite(4);
-			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
-			rt.dec_overwrite(Integer.parseInt(parse[1])-1);
+			rs.dec_overwrite(Integer.parseInt(parse[2]));
+			rt.dec_overwrite(Integer.parseInt(parse[1]));
 			imm.dec_overwrite(Integer.parseInt(parse[3]));
 			
 			ir.overwrite_section(0, op);

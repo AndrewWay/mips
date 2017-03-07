@@ -10,7 +10,7 @@ public class Firmware {
 	
 	public Firmware(int rs, int rn, int imn){
 		setRegSize(rs);
-		setRegNum(rn);
+		setRegNum(rn+1);
 		setInstNum(imn);
 		createPC();
 		setPC(0);
@@ -41,8 +41,8 @@ public class Firmware {
 		inst_mem_num=imn;
 	}
 	public void disp_registers(){
-		for(int i=0;i<getRegNum();i++){
-			System.out.println("r"+i+" "+registers[i].disp());
+		for(int i=1;i<getRegNum();i++){
+			System.out.println("R"+i+" "+registers[i].disp());
 		}
 	}
 	public void disp_register(int i){

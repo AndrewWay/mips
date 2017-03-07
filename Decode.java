@@ -29,6 +29,7 @@ public class Decode extends Stage{
 		//Sign extend the offset
 		Bin sign_ext_offset=new Bin(32);
 		sign_ext_offset.overwrite_section(16,offset);
+		getMem().setControlVector(processOP(op));
 		//Load the outgoing buffer
 		loadBuffer(0,Datapath);
 		loadBuffer(1,ReadRegister2);
@@ -39,7 +40,6 @@ public class Decode extends Stage{
 		loadBuffer(6, getMem().getControlVector());
 		System.out.printf("OP %d RS %d RT %d RD %d SHAMT %d FUNCT %d\n", op,rs,rt,rd,shamt,funct);
 		//Set control vector in memory
-		getMem().setControlVector(processOP(op));
 	}
 	
 	public int[] processOP(int op){

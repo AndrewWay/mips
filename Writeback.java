@@ -1,7 +1,7 @@
 
 public class Writeback extends Stage{
 	Mux m14;
-	int mux14_output;
+	int Mux14Output;
 	Bin Mux12Output;
 	public Writeback(Firmware m) {
 		super(m);
@@ -18,16 +18,16 @@ public class Writeback extends Stage{
 		m14.setPort0(ALUResult.getArray());
 		m14.setPort1(Readdata.getArray());
 		m14.setSelect(control_vector.getArray()[8]);
-		mux14_output=Bin.bin_toDec(m14.getOutput());
-		System.out.println("MUX14 OUTPUT: "+mux14_output);
+		Mux14Output=Bin.bin_toDec(m14.getOutput());
+		System.out.println("MUX14 OUTPUT: "+Mux14Output);
 		
 		//Writeback if needed
 		if(control_vector.getArray()[7]==1){
-			getMem().overwrite_register(Mux12Output.evaluate(), mux14_output);
+			getMem().overwrite_register(Mux12Output.evaluate(), Mux14Output);
 		}
 	}
 	public int getMux14Output(){
-		return mux14_output;
+		return Mux14Output;
 	}
 	public int getMux12Output(){
 		return Mux12Output.evaluate();

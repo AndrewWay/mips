@@ -22,7 +22,7 @@ public class MIPS {
 		String input;
 		while(!(input = in.nextLine()).isEmpty()) {
 			String[] parse = input.split(" ");
-			int regNum = Integer.parseInt(parse[0].substring(1))-1;
+			int regNum = Integer.parseInt(parse[0].substring(1));
 			mem.overwrite_register(regNum, Integer.parseInt(parse[1]));
 		}
 		
@@ -50,11 +50,31 @@ public class MIPS {
 		IF.fetch();
 		ID.loadBuffer(IF.getOutputBuffer());
 		ID.decode();
+		System.out.print("ID Input Buffer: ");
+		for (int i=0; i<ID.getInputBufferSize();i++) {
+			System.out.print(ID.getInputBuffer()[i].disp());
+		}
+		System.out.println();
 		EX.loadBuffer(ID.getOutputBuffer());
 		EX.execute();
+		System.out.print("EX Input Buffer: ");
+		for (int i=0; i<EX.getInputBufferSize();i++) {
+			System.out.print(EX.getInputBuffer()[i].disp());
+		}
+		System.out.println();
 		MEM.loadBuffer(EX.getOutputBuffer());
 		MEM.memory();
+		System.out.print("MEM Input Buffer: ");
+		for (int i=0; i<MEM.getInputBufferSize();i++) {
+			System.out.print(MEM.getInputBuffer()[i].disp());
+		}
+		System.out.println();
 		WB.loadBuffer(MEM.getOutputBuffer());
+		System.out.print("WB Input Buffer: ");
+		for (int i=0; i<WB.getInputBufferSize();i++) {
+			System.out.print(WB.getInputBuffer()[i].disp());
+		}
+		System.out.println();
 		WB.writeback();
 	}
 }

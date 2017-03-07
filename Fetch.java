@@ -67,6 +67,9 @@ public class Fetch extends Stage{
 			ir.overwrite_section(16, rd);
 			ir.overwrite_section(21, shamt);
 			ir.overwrite_section(26, funct);
+			
+			System.out.println("Semantics: ");
+			System.out.println("R"+rd.evaluate()+" <- R"+rs.evaluate()+"+ R"+rt.evaluate());
 		}
 		else if (parse[0].equalsIgnoreCase("sub")) {
 			Bin funct = new Bin(6);
@@ -86,6 +89,9 @@ public class Fetch extends Stage{
 			ir.overwrite_section(16, rd);
 			ir.overwrite_section(21, shamt);
 			ir.overwrite_section(26, funct);
+			
+			System.out.println("Semantics: ");
+			System.out.println("R"+rd.evaluate()+" <- R"+rs.evaluate()+"- R"+rt.evaluate());
 		}
 		else if (parse[0].equalsIgnoreCase("lw")) {
 			Bin imm = new Bin(16);
@@ -99,6 +105,9 @@ public class Fetch extends Stage{
 			ir.overwrite_section(6, rs);
 			ir.overwrite_section(11, rt);
 			ir.overwrite_section(16, imm);
+			
+			System.out.println("Semantics: ");
+			System.out.println("R"+rt.evaluate()+" <- Mem[R"+rs.evaluate()+" "+imm.evaluate()+"]");
 		}
 		else if (parse[0].equalsIgnoreCase("sw")) {
 			Bin imm = new Bin(16);
@@ -113,6 +122,9 @@ public class Fetch extends Stage{
 			ir.overwrite_section(6, rs);
 			ir.overwrite_section(11, rt);
 			ir.overwrite_section(16, imm);
+			
+			System.out.println("Semantics: ");
+			System.out.println("Mem[R"+rs.evaluate()+" + "+imm.evaluate()+"] <- R" + rt.evaluate());
 		}
 		else if (parse[0].equalsIgnoreCase("beq")) {
 			Bin imm = new Bin(16);
@@ -127,6 +139,8 @@ public class Fetch extends Stage{
 			ir.overwrite_section(11, rt);
 			ir.overwrite_section(16, imm);
 			
+			System.out.println("Semantics: ");
+			System.out.println("IF R"+rt.evaluate()+" == R"+rs.evaluate()+": Go To PC+4*"+imm.evaluate());
 		}
 		else {
 			System.out.println("Incorrect instruction or instruction format.");

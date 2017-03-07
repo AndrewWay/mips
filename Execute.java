@@ -2,13 +2,13 @@ import java.lang.reflect.Array;
 import java.util.Arrays;
 
 public class Execute extends Stage {
-	private Bin RT,RS,RD,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct,ALUResult,AddResult,Zero;
+	private Bin RT,RS,RD,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct,ALUResult,AddResult,Zero,CV;
 	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset,funct,op;
 	int RegDst,ALUOp1,ALUOp0,ALUSrc;
 	Mux m11,m12;
 	public Execute(Firmware m){
 		super(m);
-		this.inbuff_size=6;//rd|rt|ext_offset|readdata2|readdata1|pc
+		this.inbuff_size=7;//rd|rt|ext_offset|readdata2|readdata1|pc|control vector
 		this.outbuff_size=5;
 		createBuffers();
 		m11=new Mux();
@@ -101,6 +101,7 @@ public class Execute extends Stage {
 		addresult=pc+4*offset;
 	}
 	public void readIngoingBuffer(){
+		CV = getIBuffSeg(6);
 		PC = getIBuffSeg(5);
 		Readdata1 = getIBuffSeg(4);
 		Readdata2 = getIBuffSeg(3);

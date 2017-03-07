@@ -60,7 +60,7 @@ public class Bin {
 	}
 	public String dispVal(){
 		String output=Integer.toString(evaluate());
-		return output;
+		return output+"|";
 	}
 	public void input(int i,int val){
 		//Update a section of a Bin with 0 or 1

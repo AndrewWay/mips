@@ -41,40 +41,115 @@ public class MIPS {
 			
 		//}
 		
-		mem.disp_registers();
+		//mem.disp_registers();
 		//mem.randomize_register(1);
 		//mem.getRegister(2).dec_overwrite(10);
 		//mem.getRegister(3).dec_overwrite(6);
 		//mem.disp_registers();
 
-		IF.fetch();
-		ID.loadBuffer(IF.getOutputBuffer());
-		ID.decode();
-		System.out.print("ID Input Buffer: ");
-		for (int i=0; i<ID.getInputBufferSize();i++) {
-			System.out.print(ID.getInputBuffer()[i].disp());
+		while(true) {
+			IF.fetch();
+			ID.loadBuffer(IF.getOutputBuffer());
+			ID.decode();
+
+			EX.loadBuffer(ID.getOutputBuffer());
+			EX.execute();
+
+			MEM.loadBuffer(EX.getOutputBuffer());
+			MEM.memory();
+
+			System.out.println();
+			WB.loadBuffer(MEM.getOutputBuffer());
+			WB.writeback();
+			
+			//Write output options and give option to break
+			
+			while(true) {
+				System.out.println("Please select option to continue: (Select number)");
+				System.out.print("	1. Display Full Trace.\n	2. Display Memory Registers\n	3. Display Memory Buffers\n	4. Input next instruction\n	5.Restart\n");
+				
+				String line = in.nextLine();
+				
+				int c = Integer.parseInt(line);
+				if(c==1) {
+					//TODO
+				}
+				else if(c==2){
+					mem.disp_registers();
+				}
+				else if(c==3){
+					System.out.println("IF/ID Input Buffer: ");
+					System.out.print("**********************************************************\n*");
+					System.out.println("Format: IR | PC+4");
+					System.out.print("Binary: ");
+					for (int i=0; i<ID.getInputBufferSize();i++) {
+						System.out.print(ID.getInputBuffer()[i].disp());
+					}
+					System.out.print("\n Decimal: ");
+					for (int i=0; i<ID.getInputBufferSize();i++) {
+						System.out.print(ID.getInputBuffer()[i].dispVal());
+					}
+					System.out.println();
+					System.out.print("**********************************************************\n");
+					
+					System.out.println("ID/EX Input Buffer: ");
+					System.out.print("**********************************************************\n*");
+					System.out.println("Format: IR[15-11] | IR[20-16] | Sign Extended IR[15-0] | ReadData2 | ReadData1 | PC+4");
+					System.out.print("Binary: ");
+					for (int i=0; i<EX.getInputBufferSize();i++) {
+						System.out.print(EX.getInputBuffer()[i].disp());
+					}
+					System.out.print("\nDecimal: ");
+					for (int i=0; i<EX.getInputBufferSize();i++) {
+						System.out.print(EX.getInputBuffer()[i].dispVal());
+					}
+					System.out.println();
+					System.out.print("**********************************************************\n");
+					
+					System.out.println("EX/MEM Input Buffer: ");
+					System.out.print("**********************************************************\n*");
+					System.out.println("Format: Mux12 Output | ReadData2 | ALUResult | Zero | AddResult");
+					System.out.print("Binary: ");
+					for (int i=0; i<MEM.getInputBufferSize();i++) {
+						System.out.print(MEM.getInputBuffer()[i].disp());
+					}
+					System.out.print("\nDecimal: ");
+					for (int i=0; i<MEM.getInputBufferSize();i++) {
+						System.out.print(MEM.getInputBuffer()[i].dispVal());
+					}
+					System.out.println();
+					System.out.print("**********************************************************\n");
+					
+					System.out.println("MEM/WB Input Buffer: ");
+					System.out.print("**********************************************************\n*");
+					System.out.println("Format: Mux12 Output | ALU Result | ReadData");
+					System.out.print("Binary: ");
+					for (int i=0; i<WB.getInputBufferSize();i++) {
+						System.out.print(WB.getInputBuffer()[i].disp());
+					}
+					System.out.print("\nDecimal: ");
+					for (int i=0; i<WB.getInputBufferSize();i++) {
+						System.out.print(WB.getInputBuffer()[i].dispVal());
+					}
+					System.out.println();
+					System.out.print("**********************************************************\n");
+				}
+				else if(c==4){
+					break;
+				}
+				else if(c==5){
+					break;
+				}
+				else {
+					System.out.println("Please input valid integer.");
+				}
+			
+				
+			}
 		}
-		System.out.println();
-		EX.loadBuffer(ID.getOutputBuffer());
-		EX.execute();
-		System.out.print("EX Input Buffer: ");
-		for (int i=0; i<EX.getInputBufferSize();i++) {
-			System.out.print(EX.getInputBuffer()[i].disp());
-		}
-		System.out.println();
-		MEM.loadBuffer(EX.getOutputBuffer());
-		MEM.memory();
-		System.out.print("MEM Input Buffer: ");
-		for (int i=0; i<MEM.getInputBufferSize();i++) {
-			System.out.print(MEM.getInputBuffer()[i].disp());
-		}
-		System.out.println();
-		WB.loadBuffer(MEM.getOutputBuffer());
-		System.out.print("WB Input Buffer: ");
-		for (int i=0; i<WB.getInputBufferSize();i++) {
-			System.out.print(WB.getInputBuffer()[i].disp());
-		}
-		System.out.println();
-		WB.writeback();
 	}
+		
+
+	
+	
 }

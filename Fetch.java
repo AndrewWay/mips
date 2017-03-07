@@ -21,12 +21,15 @@ public class Fetch extends Stage{
 	public void fetch(){
 		PC.overwrite(MUX3.getOutput()); //Get the PC register value
 		
-		MUX3.setPort0(Bin.dec_toBin(PC.evaluate()+4)); 		//Increment PC					
+		PC.overwrite(Bin.dec_toBin(PC.evaluate()+4));
+		MUX3.setPort0(PC.getArray()); 		//Increment PC					
 		
 		//Obtain the instruction located at PC
 		Firmware m = getMem();
 		//int[] instruction = m.getInstMem()[PC.evaluate()];
 		
+		//Instead of fetching our instructions from an instruction memory, the user inputs instructions one by one.
+		System.out.print("Next instruction: ");
 		instruction = in.nextLine();
 		parseInput(instruction);
 		

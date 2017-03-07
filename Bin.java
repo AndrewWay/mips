@@ -1,4 +1,5 @@
 import java.lang.reflect.Array;
+import java.util.Arrays;
 import java.util.Random;
 
 public class Bin {
@@ -107,6 +108,7 @@ public class Bin {
 	public void dec_overwrite(int r){
 		System.out.println("INPUT REG VALUE "+r);
 		int[] newVal = dec_toBin(r);
+		System.out.println(Arrays.toString(newVal));
 		int newBinSize = Array.getLength(newVal);
 		if(newBinSize==bin_size){
 			bin=newVal;
@@ -128,20 +130,22 @@ public class Bin {
 	public static int[] addBins(Bin first, Bin second) {
 		int dec=first.evaluate() + second.evaluate();
 		return dec_toBin(dec);
-		
 	}
 	
 	public static int[] dec_toBin(int dec){
 		
 		//determine array size needed
+		boolean negate=false;
+		if(dec<0){
+			negate=true;
+			dec=Math.abs(dec);
+		}
 		int n=0;
 		int binGuess = (int) Math.pow(2, n)-1;
 		while(binGuess < dec){
-			n=n+1;
+			n=n+8;
 			binGuess = (int) Math.pow(2, n)-1;
 		}
-		
-		
 		int[] bin = new int[n];
 		for(int i=0;i<n;i++){
 			int term = (int) Math.pow(2,n-i-1);
@@ -153,16 +157,55 @@ public class Bin {
 				dec=dec-term;
 			}
 		}
+		if(negate){
+			bin=negate(bin);
+		}
 		return bin;
 	}
 	public static int bin_toDec(int[] bin){
 		int size = Array.getLength(bin);
 		int decimal = 0;
+		int parity;
+		if(bin[0]==1){
+			parity=-1;
+			bin=negate(bin);
+		}
+		else{
+			parity=1;
+		}
 		for(int i=0;i<=size-1;i++){
 			//System.out.println(bin[i]);
 			int term = (int) Math.pow(2, size-1-i);
 			decimal=decimal+bin[i]*term;//Does not account for negative numbers
 		}
-		return decimal;
+		return parity*decimal;
+	}
+	public static int[] negate(int[] b){
+			//bit inversion
+			for(int i=0;i<Array.getLength(b);i++){
+				if(b[i]==0){
+					b[i]=1;
+				}
+				else if(b[i]==1){
+					b[i]=0;
+				}
+			}
+			//add 1
+			int remainder=1;
+			int i=Array.getLength(b)-1;
+			while(remainder!=0&&i>=0){
+				if(b[i]==0){
+					b[i]=1;
+					remainder=0;
+				}
+				else if(b[i]==1){
+					b[i]=0;
+				}
+				i--;
+			}
+			if(remainder==0&&i<0){
+				System.out.println("ERROR: OVERFLOW IN SIGN FLIP");
+			}
+		return b;
 	}
 }

@@ -46,12 +46,27 @@ public class Decode extends Stage{
 		//Output for DE stage
 		System.out.println("\nData Ports :");
 		System.out.println("Inputs");
-		System.out.print("	Read Register 1 : " + rs + "\n	Read Register 2 :" + rt + "\n	Write Register : N/A" + "\n	Write Data : N/A\n");
+		System.out.print("	Read Register 1 : " + rs + "\n	Read Register 2 : " + rt + "\n	Write Register : N/A" + "\n	Write Data : N/A\n");
 		System.out.println("Outputs");
 		System.out.print("	Read Data 1 : " + Readdata1.evaluate() + "\n	Read Data 2 : " + Readdata2.evaluate()+"\n");
 		
-		System.out.println("Relevant Data Paths: ");
-		System.out.print("	Sign Extended IR[15-0] : " + sign_ext_offset.evaluate() + "\n	IR[20-16] : " + Datapath.evaluate() + "\n	IR[15-11] : " + rt);
+		System.out.println("\nRelevant Data Paths: ");
+		System.out.print("	Sign Extended IR[15-0] : " + sign_ext_offset.evaluate() + "\n	IR[20-16] : " + Datapath.evaluate() + "\n	IR[15-11] : " + rt + "\n");
+		
+		System.out.println("\nID/EX Buffer: ");
+		System.out.print("**********************************************************\n");
+		System.out.println("Format: IR[15-11] | IR[20-16] | Sign Extended IR[15-0] | ReadData2 | ReadData1 | PC+4 | Control Vector (EX, MEM, WB)");
+		System.out.print("Binary: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].disp());
+		}
+		System.out.print("\nDecimal: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].dispVal());
+		}
+		System.out.println();
+		System.out.print("**********************************************************\n");
+		
 		
 	}
 	
@@ -93,6 +108,7 @@ public class Decode extends Stage{
 		for( int i=7; i<9 ;i++) {
 			System.out.print(" " + control_vector[i]);
 		}
+		System.out.println();
 		
 		return control_vector;
 	}

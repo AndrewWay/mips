@@ -5,6 +5,7 @@ public class Memory extends Stage{
 	Bin[] dataMemory = new Bin[10000];//Are the bins inside the array initialized at any point??
 	Bin readData=new Bin(1);//Default size of array
 	Bin Mux12_Output,Readdata2,ALUResult,Zero,AddResult,CV;
+	Boolean branchGate;
 	
 	public Memory(Firmware m) {
 		super(m);
@@ -19,6 +20,7 @@ public class Memory extends Stage{
 	
 	public void memory(){
 		System.out.println("MEM STAGE\n\n");
+		branchGate=false;
 		
 		//CV=getMem().getControlVector();
 		readIngoingBuffer();
@@ -41,9 +43,8 @@ public class Memory extends Stage{
 		loadBuffer(0,getIBuffSeg(0));
 	}
 	public void andGate(){
-		if((Zero.getArray()[0]) != 0 && (getMem().getControlVector().getArray()[4] != 0)) {
-			//Send input for multiplexer in fetch stage
-			//Need to wait for multiplexer objects
+		if((Zero.getArray()[0]) != 0 && (getMem().getControlVector().getArray()[0] != 0)) {
+			branchGate=true;
 		}
 	}
 	public void readIngoingBuffer(){
@@ -65,6 +66,10 @@ public class Memory extends Stage{
 	public void writeData(int i,int v){
 
 			dataMemory[i].dec_overwrite(v);//Return 32 bit Bin
+	}
+	
+	public boolean getBGate() {
+		return branchGate;
 	}
 
 }

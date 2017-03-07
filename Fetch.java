@@ -23,6 +23,12 @@ public class Fetch extends Stage{
 		
 		PC.overwrite(MUX3.getOutput()); //Get the PC register value
 		
+		//Fetch instruction from memory here
+		//Instead of fetching our instructions from an instruction memory, the user inputs instructions one by one.
+		System.out.print("Input next instruction: (op opr1 opr2 opr3)");
+		instruction = in.nextLine();
+		parseInput(instruction);
+		
 		PC.overwrite(Bin.dec_toBin(PC.evaluate()+4));
 		MUX3.setPort0(PC.getArray()); 		//Increment PC					
 		
@@ -30,19 +36,39 @@ public class Fetch extends Stage{
 		Firmware m = getMem();
 		//int[] instruction = m.getInstMem()[PC.evaluate()];
 		
-		//Instead of fetching our instructions from an instruction memory, the user inputs instructions one by one.
-		System.out.print("Input next instruction: (op opr1 opr2 opr3)");
-		instruction = in.nextLine();
-		parseInput(instruction);
+
 		
 		
 		//Load that instruction into buffer
 		
 		loadBuffer(0,ir);
 		loadBuffer(1,PC);
+		
+		System.out.println("\nData Ports :");
+		System.out.println("Inputs");
+		System.out.print("	Read Address : " + (PC.evaluate() - 4) +"\n");
+		System.out.println("Outputs");
+		System.out.print("	Adder : " + Bin.bin_toDec(MUX3.getPort0().getArray()) + "\n	IR : See Buffer\n");
+		
+		System.out.println("\nIF/ID Buffer: ");
+		System.out.print("**********************************************************\n");
+		System.out.println("Format: IR | PC+4");
+		System.out.print("Binary: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].disp());
+		}
+		System.out.print("\nDecimal: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].dispVal());
+		}
+		System.out.println();
+		System.out.print("**********************************************************\n");
 	}
 	public Bin getIR(){
 		return ir;
+	}
+	public Mux getMux(){
+		return MUX3;
 	}
 	
 	private void parseInput(String instr){

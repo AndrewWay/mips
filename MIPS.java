@@ -75,6 +75,13 @@ public class MIPS {
 			MEM.loadBuffer(EX.getOutputBuffer());
 			MEM.memory();
 
+			//Set Multiplexer in IF stage
+			IF.getMux().setPort1(MEM.AddResult.getArray());
+			
+			if(MEM.getBGate()) {
+				IF.getMux().setSelect(1);
+			}
+			
 			System.out.println();
 			WB.loadBuffer(MEM.getOutputBuffer());
 			WB.writeback();

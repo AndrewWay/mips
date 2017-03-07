@@ -43,7 +43,7 @@ public class Execute extends Stage {
 				}
 				aluresult=alu0.evaluate()+alu1.evaluate();
 			}
-			else {
+			else { //must be subtract
 				if(alu0.evaluate()==alu1.evaluate()){
 					zero[0]=1;
 				}

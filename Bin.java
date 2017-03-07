@@ -39,11 +39,12 @@ public class Bin {
 		int[] newBinArray = newBin.getArray();
 		if(start+newBin.getBinSize()>this.getBinSize()){
 			System.out.println("ERROR: newBin cannot overwrite the specified section of the bin");
+			System.out.println("Recipient Bin Size: "+getBinSize());
 			System.out.println("Aborting section overwrite");
 		}
 		else{
-			for(int i=start;i<this.getBinSize();i++){
-				this.input(i, newBinArray[i-start]);
+			for(int i=0;i<newBin.getBinSize();i++){
+				this.input(i+start, newBinArray[i]);
 			}
 		}
 	}
@@ -134,7 +135,7 @@ public class Bin {
 		
 		//determine array size needed
 		int n=0;
-		int binGuess = (int) Math.pow(2, n);
+		int binGuess = (int) Math.pow(2, n)-1;
 		while(binGuess < dec){
 			n=n+1;
 			binGuess = (int) Math.pow(2, n)-1;

@@ -35,9 +35,7 @@ public class Decode extends Stage{
 		loadBuffer(2,sign_ext_offset);
 		loadBuffer(3,Readdata2);
 		loadBuffer(4,Readdata1);
-		loadBuffer(5,PC);//Fix this ugly line
-		//ID_EX=concat(Datapath,concat(ReadRegister2,concat(sign_ext,concat(Readdata2,concat(Readdata1,PC)))));//OLD LINE. Do not use.
-		
+		loadBuffer(5,PC);	
 		System.out.printf("OP %d RS %d RT %d RD %d SHAMT %d FUNCT %d\n", op,rs,rt,rd,shamt,funct);
 		//Set control vector in memory
 		getMem().setControlVector(processOP(op));

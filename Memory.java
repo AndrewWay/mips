@@ -35,6 +35,33 @@ public class Memory extends Stage{
 			dataMemory[writeAddress.evaluate()] = writeData;
 		}
 		loadOutgoingBuffer();
+		
+		//Display MEM outputs
+		System.out.println("\nData Ports :");
+		System.out.println("Inputs");
+		System.out.print("	AND 0 : " + CV.getArray()[0] + "\n	AND 1 : " + Zero.evaluate() + "\n	Read Address : " + ALUResult.evaluate() +  "\n	Write Address :" + ALUResult.evaluate() + "\n	Write Data : " + Readdata2.evaluate() + "\n");
+		System.out.println("Outputs");
+		System.out.print("	AND GATE : " + branchGate + "\n	Read Data : " + readData.evaluate()+"\n");
+		
+		System.out.println("\nRelevant Data Paths: ");
+		System.out.print("	ALUResult : " + ALUResult.evaluate() + "\n	Multiplexer 12 Output : " + Mux12_Output.evaluate() + "\n");
+		
+		System.out.println("\nRelevant Control Vector Components: ");
+		System.out.print("	Branch : " + CV.getArray()[0] + "\n	MemRead : " + CV.getArray()[1] + "\n	MemWrite : " + CV.getArray()[2] + "\n");
+		
+		System.out.println("\nMEM/WB Buffer: ");
+		System.out.print("**********************************************************\n");
+		System.out.println("Format: Mux12 Output | ALU Result | ReadData | Control Vector (WB)");
+		System.out.print("Binary: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].disp());
+		}
+		System.out.print("\nDecimal: ");
+		for (int i=0; i<getOutputBufferSize();i++) {
+			System.out.print(getOutputBuffer()[i].dispVal());
+		}
+		System.out.println();
+		System.out.print("**********************************************************\n");
 	}
 	public void loadOutgoingBuffer(){
 		loadBuffer(3,new Bin(Arrays.copyOfRange(CV.getArray(),3,CV.getArray().length)));
@@ -43,7 +70,7 @@ public class Memory extends Stage{
 		loadBuffer(0,getIBuffSeg(0));
 	}
 	public void andGate(){
-		if((Zero.getArray()[0]) != 0 && (getMem().getControlVector().getArray()[0] != 0)) {
+		if((Zero.getArray()[0]) != 0 && (CV.getArray()[0] != 0)) {
 			branchGate=true;
 		}
 	}
@@ -54,11 +81,6 @@ public class Memory extends Stage{
 		Zero=getIBuffSeg(3);
 		AddResult=getIBuffSeg(4);
 		CV=getIBuffSeg(5);
-		
-		System.out.println("CV");
-		for(int j=0; j<CV.getBinSize(); j++){
-			System.out.println(CV.getArray()[j]);
-		}
 	}
 	public Bin getReadData(int i){
 		return dataMemory[i];

@@ -86,6 +86,8 @@ public class MIPS {
 			WB.loadBuffer(MEM.getOutputBuffer());
 			WB.writeback();
 			
+			System.out.print("\n\n\n TRACE FINISHED. DISPLAYING OPTIONS \n\n\n");
+			
 			//Write output options and give option to break
 			
 			while(true) {

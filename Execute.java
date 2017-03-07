@@ -39,9 +39,9 @@ public class Execute extends Stage {
 		System.out.println("\nRelevant Control Vector Components: ");
 		System.out.print("	RegDst : " + RegDst + "\n	ALUOp1 : " + ALUOp1 + "\n	ALUOp0 : " + ALUOp0 + "\n	ALUSrc : " + ALUSrc + "\n");
 		
-		System.out.println("\nID/EX Buffer: ");
+		System.out.println("\nEX/MEM Buffer: ");
 		System.out.print("**********************************************************\n");
-		System.out.println("Format: IR[15-11] | IR[20-16] | Sign Extended IR[15-0] | ReadData2 | ReadData1 | PC+4 | Control Vector (MEM, WB)");
+		System.out.println("Format: Mux12 Output | ReadData2 | ALUResult | Zero | AddResult | Control Vector (MEM, WB)");
 		System.out.print("Binary: ");
 		for (int i=0; i<getOutputBufferSize();i++) {
 			System.out.print(getOutputBuffer()[i].disp());

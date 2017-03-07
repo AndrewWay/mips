@@ -3,7 +3,7 @@ import java.util.Arrays;
 
 public class Execute extends Stage {
 	private Bin RT,RS,RD,Readdata1,Readdata2,Mux12_Output,PC,Offset,Funct,ALUResult,AddResult,Zero;
-	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset,funct;
+	int addresult,zero,aluresult,readdata2,mux12_output,pc,offset,funct,op;
 	int RegDst,ALUOp1,ALUOp0,ALUSrc;
 	Mux m11,m12;
 	public Execute(Firmware m){
@@ -31,16 +31,27 @@ public class Execute extends Stage {
 		Bin alu0=new Bin(alu_input0);
 		Bin alu1=new Bin(alu_input1);
 		int[] zero=new int[1];
-		if(funct==32){
-			if(alu_input0==alu_input1){
-				zero[0]=1;
+		if(ALUOp1==1) {
+			if(funct==32){
+				if(alu_input0==alu_input1){
+					zero[0]=1;
+				}
+				else{
+					zero[0]=0;
+				}
+				aluresult=alu0.evaluate()+alu1.evaluate();
 			}
-			else{
-				zero[0]=0;
+			else {
+				if(alu_input0==alu_input1){
+					zero[0]=1;
+				}
+				else{
+					zero[0]=0;
+				}
+				aluresult=alu0.evaluate()-alu1.evaluate();
 			}
-			aluresult=alu0.evaluate()+alu1.evaluate();
 		}
-		else{
+		else if (ALUOp0==0){
 			aluresult=0;//TODO Make ALUResult Bin null/nonsense??
 			zero[0]=0;//TODO Make zero null?
 		}
@@ -50,7 +61,7 @@ public class Execute extends Stage {
 		System.out.println("ALURESULT "+AddResult.disp());
 	}
 	public void extractFunct(){
-		Funct = Offset.extract(26, 31);//TODO Change this so you dont use a fixed integer argument
+		Funct = Offset.extract(21, 31);//TODO Change this so you dont use a fixed integer argument
 		funct = Funct.evaluate();
 	}
 	public void setMux(){//TODO Bad method, clean this up.

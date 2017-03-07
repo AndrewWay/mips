@@ -52,9 +52,9 @@ public class Fetch extends Stage{
 			Bin shamt = new Bin(5);
 			
 			op.dec_overwrite(0);
-			rs.dec_overwrite(Integer.parseInt(parse[2]));
-			rt.dec_overwrite(Integer.parseInt(parse[3]));
-			rd.dec_overwrite(Integer.parseInt(parse[1]));
+			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
+			rt.dec_overwrite(Integer.parseInt(parse[3])-1);
+			rd.dec_overwrite(Integer.parseInt(parse[1])-1);
 			shamt.dec_overwrite(0);
 			funct.dec_overwrite(32);
 			
@@ -71,9 +71,9 @@ public class Fetch extends Stage{
 			Bin shamt = new Bin(5);
 			
 			op.dec_overwrite(0);
-			rs.dec_overwrite(Integer.parseInt(parse[2]));
-			rt.dec_overwrite(Integer.parseInt(parse[3]));
-			rd.dec_overwrite(Integer.parseInt(parse[1]));
+			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
+			rt.dec_overwrite(Integer.parseInt(parse[3])-1);
+			rd.dec_overwrite(Integer.parseInt(parse[1])-1);
 			shamt.dec_overwrite(0);
 			funct.dec_overwrite(34);
 			
@@ -84,12 +84,12 @@ public class Fetch extends Stage{
 			ir.overwrite_section(21, shamt);
 			ir.overwrite_section(26, funct);
 		}
-		else if (parse[0] == "lw") {
+		else if (parse[0].equalsIgnoreCase("lw")) {
 			Bin imm = new Bin(16);
 			
 			op.dec_overwrite(35);
-			rs.dec_overwrite(Integer.parseInt(parse[2]));
-			rt.dec_overwrite(Integer.parseInt(parse[1]));
+			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
+			rt.dec_overwrite(Integer.parseInt(parse[1])-1);
 			imm.dec_overwrite(Integer.parseInt(parse[3]));
 			
 			ir.overwrite_section(0, op);
@@ -97,12 +97,12 @@ public class Fetch extends Stage{
 			ir.overwrite_section(11, rt);
 			ir.overwrite_section(16, imm);
 		}
-		else if (parse[0] == "sw") {
+		else if (parse[0].equalsIgnoreCase("sw")) {
 			Bin imm = new Bin(16);
 			
 			op.dec_overwrite(43);
-			rs.dec_overwrite(Integer.parseInt(parse[2]));
-			rt.dec_overwrite(Integer.parseInt(parse[1]));
+			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
+			rt.dec_overwrite(Integer.parseInt(parse[1])-1);
 			imm.dec_overwrite(Integer.parseInt(parse[3]));
 
 			
@@ -111,12 +111,12 @@ public class Fetch extends Stage{
 			ir.overwrite_section(11, rt);
 			ir.overwrite_section(16, imm);
 		}
-		else if (parse[0] == "beq") {
+		else if (parse[0].equalsIgnoreCase("beq")) {
 			Bin imm = new Bin(16);
 			
 			op.dec_overwrite(4);
-			rs.dec_overwrite(Integer.parseInt(parse[2]));
-			rt.dec_overwrite(Integer.parseInt(parse[1]));
+			rs.dec_overwrite(Integer.parseInt(parse[2])-1);
+			rt.dec_overwrite(Integer.parseInt(parse[1])-1);
 			imm.dec_overwrite(Integer.parseInt(parse[3]));
 			
 			ir.overwrite_section(0, op);

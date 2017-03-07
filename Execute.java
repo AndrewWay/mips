@@ -60,9 +60,8 @@ public class Execute extends Stage {
 				zero[0]=0;
 			}
 		}
-		else {
-			//lw or sw, ALU gives out alu0 value
-			aluresult=alu0.evaluate();
+		else { //Must be lw or sw, in which case ALUOp = 0 0 and adding occurs
+			aluresult=alu0.evaluate()+alu1.evaluate();
 			zero[0]=0; //unimportant
 		}
 		Zero = new Bin(zero);

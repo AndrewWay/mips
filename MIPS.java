@@ -92,18 +92,16 @@ public class MIPS {
 			
 			while(true) {
 				System.out.println("Please select option to continue: (Select number)");
-				System.out.print("	1. Display Full Trace.\n	2. Display Memory Registers\n	3. Display Memory Buffers\n	4. Read Memory Address\n	5. Input next instruction\n	6. Exit\n");
+				System.out.print("	1. Display Memory Registers\n	2. Display All Buffers\n	3. Read Memory Address\n	4. Input next instruction\n	5. Exit\n");
 				
 				line = in.nextLine();
 				
 				int c = Integer.parseInt(line);
-				if(c==1) {
-					//TODO
-				}
-				else if(c==2){
+
+				if(c==1){
 					mem.disp_registers();
 				}
-				else if(c==3){
+				else if(c==2){
 					System.out.println("IF/ID Input Buffer: ");
 					System.out.print("**********************************************************\n*");
 					System.out.println("Format: IR | PC+4");
@@ -160,7 +158,7 @@ public class MIPS {
 					System.out.println();
 					System.out.print("**********************************************************\n");
 				}
-				else if(c==4){
+				else if(c==3){
 					System.out.println("Please input data memory address in format <address>");
 					line = in.nextLine();
 					int address;
@@ -181,10 +179,10 @@ public class MIPS {
 				
 				}
 				
-				else if(c==5){
+				else if(c==4){
 					break;
 				}
-				else if(c==6){
+				else if(c==5){
 					System.exit(1);
 				}
 				else {

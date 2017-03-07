@@ -9,7 +9,7 @@ public class Decode extends Stage{
 		createBuffers();
 	}
 	public void decode(){
-		System.out.println("\n\nDE STAGE \n\n");
+		System.out.println("\n\nID STAGE \n\n");
 		readIngoingBuffer();
 //		Bin Opfield = getIBuffSeg(0).extract(0,5);//Op code
 //		Bin ReadRegister1 = getIBuffSeg(0).extract(6,10);//TODO Check the indices

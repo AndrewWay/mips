@@ -42,7 +42,7 @@ public class Firmware {
 	}
 	public void disp_registers(){
 		for(int i=1;i<getRegNum();i++){
-			System.out.println("R"+i+" "+registers[i].disp());
+			System.out.println("R"+i+" "+registers[i].disp()+ "" + registers[i].evaluate());
 		}
 	}
 	public void disp_register(int i){

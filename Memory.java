@@ -19,7 +19,7 @@ public class Memory extends Stage{
 	}
 	
 	public void memory(){
-		System.out.println("MEM STAGE\n\n");
+		System.out.println("\n\nMEM STAGE\n\n");
 		branchGate=false;
 		
 		//CV=getMem().getControlVector();

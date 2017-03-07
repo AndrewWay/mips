@@ -56,11 +56,5 @@ public class MIPS {
 		MEM.memory();
 		WB.loadBuffer(MEM.getOutputBuffer());
 		WB.writeback();
-		//Get write register
-		int WriteData = WB.getMux14Output();
-		int WriteRegister = WB.getMux12Output();
-		System.out.println("WRITEDATA "+WriteData);
-		System.out.println("WRITEREG "+WriteRegister);
-		mem.overwrite_register(WriteRegister,WriteData);
 	}
 }
